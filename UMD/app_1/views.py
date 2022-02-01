@@ -5,4 +5,5 @@ from django.contrib import messages
 
 # Create your views here.
 def home(request):
-    return HttpResponse("Hello everyone")
+    return render(request,'base.html')
+    # return HttpResponse("Hello everyone")
