@@ -109,3 +109,13 @@ Unused Medicine Donation -
 
 >Transferability:
     It refers to the ability of a system to be transferred from a particular operating environment to another. The site will work on any type of search engine and thus it is transferable.
+
+
+
+
+>Process,Model,Aproach Suitable for the Project 
+        In our opinion , in case of our project (Unused medicine distribution system) waterfall model is more suitable . The reason being that  for our project we are  more or less very clear about the demands of the customers and the functional requirements.
+        The customer requirements are predictable in case of unused medicine distribution system and they may not change for sufficiently long time.  Thus the requirements are very well understood and changes will be fairly limited to the design process. The plan driven nature of waterfall model helps coordinate the work . 
+        waterfall model can be used for our project due to its reliability ,strong project management capabilities , better documentation and component reusability . 
+        However waterfall model has its own drawbacks .Freezing  requirements usually requires choosing hardware which might result in final software using hardware that has become  obsolete. So in such cases agile process becomes more preferred in which the planning is incremental and may even be according to user’s changing requirements. Also a good idea is to freeze a few features according to the highest priority  as in waterfall model and rest in agile process.
+        So on basis of above arguments we can conclude that  by and large waterfall model will be most preferred process model for our project . However for few features agile process model will be preferred as per changing scenario
