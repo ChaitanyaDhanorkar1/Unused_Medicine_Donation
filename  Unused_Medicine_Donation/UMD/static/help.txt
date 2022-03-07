@@ -1,1 +1,13 @@
 # write your query here
+
+[1] signup page
+[2] signin page
+[3] home page will contain redirection links to the following pages:
+    (1) medicine_donation page    
+    (2) medicine_request page
+    (3) monetory_donation page
+    (4) user_feedback page
+all these pages will have same navbar
+backend models for these are in progress
+
+these will be the basic pages.
