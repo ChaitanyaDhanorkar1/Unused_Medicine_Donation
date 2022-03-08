@@ -7,6 +7,11 @@
     <title>Request Medicines</title>
 </head>
 <body>
-    This is medicine request page.
+    <h1>Request medicines using the form given below:</h1>
+    <form action = "" method = "post">
+        {% csrf_token %}
+        {{form.as_ul }}
+        <input type="submit" value="Submit">
+    </form>
 </body>
 </html>
