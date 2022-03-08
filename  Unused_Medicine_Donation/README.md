@@ -119,3 +119,9 @@ Unused Medicine Donation -
         waterfall model can be used for our project due to its reliability ,strong project management capabilities , better documentation and component reusability . 
         However waterfall model has its own drawbacks .Freezing  requirements usually requires choosing hardware which might result in final software using hardware that has become  obsolete. So in such cases agile process becomes more preferred in which the planning is incremental and may even be according to user’s changing requirements. Also a good idea is to freeze a few features according to the highest priority  as in waterfall model and rest in agile process.
         So on basis of above arguments we can conclude that  by and large waterfall model will be most preferred process model for our project . However for few features agile process model will be preferred as per changing scenario
+
+
+
+<!-- admin login -->
+Username :umd
+Password : umd
