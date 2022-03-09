@@ -1,10 +1,27 @@
 from django.shortcuts import render,HttpResponse
 from datetime import date, datetime
 from django.contrib import messages
+from sqlalchemy import false
 from .forms import DonationForm,RequestForm,FeedbackForm
 from django.http import HttpResponse,HttpResponseRedirect
 from app_1.models import Entry
+import random
+from twilio.rest import Client
+
 # Create your views here.
+
+# def otpfunc(phone):
+#     str="+91"
+#     str+=phone
+#     otp = random.randint(1000,9999)
+#     account_sid="AC45939b8689e9dbf036e8e6a2c045a750"
+#     auth_token ="7fb82eeb2453d2ebc4453f34d1a38851"
+#     client=Client(account_sid,auth_token)
+#     msg = client.messages.create(
+#         body= f"Your OTP is {otp}",
+#         from_ = "+19107255048",
+#         to=str
+#         )
 
 def home_function(request):
     return render(request,'home.html')
@@ -50,6 +67,11 @@ def show(request):
     data=Entry.objects.all()
     return render(request,"show.html",{'data': data})
 
+def enterotp(request):
+    if request.method=='POST':
+        otp=request.POST['otp']
+
+
 def send(request):
     if request.method=='POST':
         name=request.POST['name']
@@ -59,15 +81,48 @@ def send(request):
         adhaar=request.POST['adhaar']
         pass1=request.POST['pass1']
         pass2=request.POST['pass2']
-        if pass1==pass2 :
-            Entry(name=name,address=address,email=email,phone=phone,adhaar=adhaar,pass1=pass1).save()
-            msg="Data Stored Successfully!!"
-            return render(request,"register.html",{'msg':msg})
+
+        global newentry
+        newentry=Entry(name=name,address=address,email=email,phone=phone,adhaar=adhaar,pass1=pass1)
+        global phonenum
+        phonenum=phone
+
+        if pass1==pass2 : 
+            global otpgot
+            otpgot=otpget(phonenum)
+            return render(request,"otp.html")      
         else:
             msg="Enter the same password "
             return render(request,"register.html",{'msg':msg})
     else:
          return HttpResponse("<h2>404-Error page not found !</h2>")
+
+def otpfunc(request):
+
+    otpentered=request.POST.get('otp')
+    otp=int(otpentered)
+
+    if(otpgot==otp):
+        newentry.save()
+        msg=type(otpget)
+        return render(request,"login.html",{'msg':msg})
+    else:
+        msg="Wrong OTP"
+        return render(request,"register.html",{'msg':msg})
+
+def otpget(phonenum):
+    str="+91"
+    str=str+phonenum
+    otp = random.randint(1000,9999)
+    account_sid="AC45939b8689e9dbf036e8e6a2c045a750"
+    auth_token ="7fb82eeb2453d2ebc4453f34d1a38851"
+    client=Client(account_sid,auth_token)
+    msg = client.messages.create(
+        body= f"Your OTP is {otp}",
+        from_ = "+19107255048",
+        to=str
+        )
+    return otp
 
 def delete(request):
     adhaar=request.GET['adhaar']

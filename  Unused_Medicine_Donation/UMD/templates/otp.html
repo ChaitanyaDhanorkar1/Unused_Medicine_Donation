@@ -38,15 +38,10 @@
            </form>
        </div>
        <div id="DivOne">
-           <form action="/send" method="POST">
+           <form action="/otpfunc" method="POST">
                {%csrf_token%}
-               <h3>Name<br><input  required autofocus type="text" name="name" ></h3>
-               <h3>Address<br><input required autofocus type="text" name="address"></h3>
-               <h3>Email ID<br><input required autofocus type="text" name="email"></h3>
-               <h3>Phone No.<br><input required autofocus type="text" name="phone"></h3>
-               <h3>Adhaar No.<br><input required autofocus type="text" name="adhaar"></h3>
-               <h3>Password<br><input required autofocus type="password" name="pass1"></h3>
-               <h3>Confirm Password<br><input required autofocus type="password" name="pass2"></h3>
+
+               <h3>OTP<br><input placeholder="Enter otp from phone" required autofocus type="number" name="otp"></h3>
 
                <input type="submit" id="btn">
 
