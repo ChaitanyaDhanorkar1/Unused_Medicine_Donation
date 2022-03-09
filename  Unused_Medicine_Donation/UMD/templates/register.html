@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'home.css' %}">
+        <style>
+            body{
+                background-color: aquamarine;
+            }
+            #DivOne
+            {
+                background-color: rgb(226,225,223);
+                max-width:fit-content;
+                padding:1%;
+                margin-left:40%;
+                margin-top:8%;
+            }
+            #btn
+            {
+                margin-left:35%;
+            }
+            #DivTwo
+            {
+                margin-left:90%;
+            }
+        </style>
+    </head>
+    <body>
+        {{msg}}
+       <div id="DivTwo">
+           <form action="/show">
+               <input type="submit" value="show records">
+           </form>
+       </div>
+       <div id="DivOne">
+           <form action="/send" method="POST">
+               {%csrf_token%}
+               <h3>Name<br><input  required autofocus type="text" name="name" ></h3>
+               <h3>Address<br><input required autofocus type="text" name="address"></h3>
+               <h3>Email ID<br><input required autofocus type="text" name="email"></h3>
+               <h3>Phone No.<br><input required autofocus type="text" name="phone"></h3>
+               <h3>Adhaar No.<br><input required autofocus type="text" name="adhaar"></h3>
+               <h3>Password<br><input required autofocus type="password" name="pass1"></h3>
+               <h3>Confirm Password<br><input required autofocus type="password" name="pass2"></h3>
+               <input type="submit" id="btn">
+
+           </form>
+
+       </div>
+    </body>
+</html>
