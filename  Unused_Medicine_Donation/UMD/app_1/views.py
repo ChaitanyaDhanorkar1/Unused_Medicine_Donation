@@ -104,7 +104,7 @@ def otpfunc(request):
 
     if(otpgot==otp):
         newentry.save()
-        msg=type(otpget)
+        msg="You were added"
         return render(request,"login.html",{'msg':msg})
     else:
         msg="Wrong OTP"
