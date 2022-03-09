@@ -43,3 +43,16 @@ class FeedbackModel(models.Model):
     
     def __str__(self):
         return self.user_id
+
+
+# model for registration
+class Entry(models.Model):
+    name=models.CharField(max_length=30,default="lr")
+    address=models.CharField(max_length=30)
+    email=models.CharField(max_length=30)
+    phone=models.CharField(max_length=30)
+    adhaar=models.CharField(max_length=12,primary_key=True)
+    pass1=models.CharField(max_length=30)
+
+    def __str__(self):
+        return  self.name

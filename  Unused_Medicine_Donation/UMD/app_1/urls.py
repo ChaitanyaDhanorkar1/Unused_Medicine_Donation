@@ -23,4 +23,11 @@ urlpatterns = [
     path('medicine_donation',views.donation_function),
     path('medicine_request',views.request_function),
     path('user_feedback',views.feedback_function),
+    path('show',views.show),
+    path('send',views.send),
+    path('delete',views.delete),
+    path('edit',views.edit),
+    path('RecordEdited',views.RecordEdited),
+    path('login',views.login_user),
+    path('register',views.register)
 ]
