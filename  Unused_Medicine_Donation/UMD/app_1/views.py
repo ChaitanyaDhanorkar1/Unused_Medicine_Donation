@@ -115,7 +115,7 @@ def otpget(phonenum):
     str=str+phonenum
     otp = random.randint(1000,9999)
     account_sid="AC45939b8689e9dbf036e8e6a2c045a750"
-    auth_token ="7fb82eeb2453d2ebc4453f34d1a38851"
+    auth_token ="344c3b6957a0d05faa18c75385c6bf82"
     client=Client(account_sid,auth_token)
     msg = client.messages.create(
         body= f"Your OTP is {otp}",
