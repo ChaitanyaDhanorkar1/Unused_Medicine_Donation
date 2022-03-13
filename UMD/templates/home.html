@@ -8,74 +8,55 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        * {
-            font-family: "Montserrat", sans-serif;
-            background-color: #a2b1a5e0;
-        }
-
-        .w3-row-padding img {
-            margin-bottom: 12px
-        }
-
-        #main {
-            margin-left: 5vw;
-        }
-
-        a {
-            text-decoration: none;
-        }
-    </style>
+    <link rel="stylesheet" href="./static/main.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
 
 <body class="abc">
-    <div class="flex-container">
-        <div>Suggest a title</div>
-        <!-- <button style="padding: 5px; right:5px;position:absolute ;top:15px ;"><a href="#">new user / login </a> </button>
-         -->
-
-        <div id="DivTwo">
-            <form action="/register">
-                <input type="submit" value="Register">
-            </form>
-        </div>
-        <div id="DivOne">
-            <form action="/login">
-                <input type="submit" value="Login">
-            </form>
-            {{msg}}
-        </div>
-    </div>
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+        </label>
+        <label class="logo">UMD</label>
+        <ul>
+            <li><a class="active" href="#">Home</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Ragister</a></li>
+        </ul>
+    </nav>
     <div class="w3-padding-large" id="main">
         <!-- About Section -->
         <div class="w3-text-black w3-padding-0" id="about">
-            <h2 class="w3-text-light-black">Heading</h2>
-            <hr style="width:200px" class="w3-opacity">
-            <p>Some text about me. Some text about me. I am lorem ipsum consectetur adipiscing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                ullamco laboris nisi ut aliquip
-                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim id est laborum consectetur
-                adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            <h2 class="w3-text-light-black">Aim</h2>
+            <p>
+                Our aims is to provide an online platform for donating unused medicines or medicines to people in need.
+                Users can register themselves in the program by submitting their required information.
+            </p>
+            <p>
+                Once registered users can donate medicines by providing accurate drug information to NGOs. The system
+                has the power to prevent users from proposing an application for inappropriate or expired drugs. The
+                system will keep a record of the medications offered and available. Users can apply to donate or use
+                medications.
+            </p>
+            <p>
+                This is a donation service for the preparation of a drug collection site that can be used for continued
+                use by the needy. The website should be similar to users who can donate unused medicine to NGOs. That
+                NGO can help people in need. The user can donate the drug. Many poor people who do not have the means to
+                buy medicine, with the help of this website people can get treatment and treatment for the right
+                diseases, unused medicines will be used.
             </p>
 
 
-            <h2 class="w3-text-light-black">Heading</h2>
-            <hr style="width:200px" class="w3-opacity">
-            <p>Some text about me. Some text about me. I am lorem ipsum consectetur adipiscing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                ullamco laboris nisi ut aliquip
-                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim id est laborum consectetur
-                adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
+            <h2 class="w3-text-light-black"> Advantages</h2>
+            <ol type="i">
+                <li>It helps poor people for medication.</li>
+                <li>It will help to maintain records of medicines</li>
+                <li> Many needy people will get cured.</li>
+            </ol>
 
-
-            <h3 class="w3-padding-24 w3-text-light-black">Our Skills/ Or something else</h3>
+<!-- 
+            <h3 class="w3-padding-24 w3-text-light-black">Our Achievement</h3>
             <p class="w3-wide">Photography</p>
             <div class="w3-white">
                 <div class="w3-dark-white" style="height:28px;width:95%"></div>
@@ -106,16 +87,11 @@
                     <span class="w3-xlarge">150+</span><br>
                     Meetings
                 </div>
-            </div>
+            </div> -->
 
             <!-- Testimonials -->
             <h3 class="w3-padding-24 w3-text-light-black">Reputation</h3>
             <img src="https://www.w3schools.com/w3images/bandmember.jpg" alt="Avatar"
-                class="w3-left w3-circle w3-margin-right" style="width:80px">
-            <p><span class="w3-large w3-margin-right">XYZ</span>Founder Of NGO</p>
-            <p>XXYYZZ</p><br>
-
-            <img src="https://www.w3schools.com/w3images/avatar_g2.jpg" alt="Avatar"
                 class="w3-left w3-circle w3-margin-right" style="width:80px">
             <p><span class="w3-large w3-margin-right">XYZ</span>Founder Of NGO</p>
             <p>XXYYZZ</p><br>
@@ -156,26 +132,14 @@
                 <p><i class="fa fa-phone fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Phone: +91 XXXXXX</p>
                 <p><i class="fa fa-envelope fa-fw w3-text-white w3-xxlarge w3-margin-right"> </i> Email: mail@mail.com
                 </p>
-            </div><br>
-            <p>Let's get in touch. Send me a message:</p>
-
-            <form action="/action_page.php" target="_blank">
-                <p><input class="w3-input w3-padding-24" type="text" placeholder="Name" required name="Name"></p>
-                <p><input class="w3-input w3-padding-24" type="text" placeholder="Email" required name="Email"></p>
-                <p><input class="w3-input w3-padding-24" type="text" placeholder="Subject" required name="Subject"></p>
-                <p><input class="w3-input w3-padding-24" type="text" placeholder="Message" required name="Message"></p>
-                <p>
-                    <button class="w3-button w3-light-black w3-padding-large" type="submit">
-                        <i class="fa fa-paper-plane"></i> SEND MESSAGE
-                    </button>
-                </p>
-            </form>
+            </div>
+            <br>
             <!-- End Contact Section -->
         </div>
 
         <!-- Footer. This section contains an ad for W3Schools Spaces. You can leave it to support us. -->
         <footer class="w3-content w3-padding-64 w3-text-black w3-xlarge">
-            <i class="fa fa-facebook-official w3-hover-opacity"><a href="#"></a></i>
+            <a href="https://www.facebook.com/"> <i class="fa fa-facebook-official w3-hover-opacity"></i></a>
             <i class="fa fa-instagram w3-hover-opacity"></i><a href="#"></a>
             <i class="fa fa-snapchat w3-hover-opacity"></i><a href="#"></a>
             <i class="fa fa-pinterest-p w3-hover-opacity"></i><a href="#"></a>
@@ -185,7 +149,6 @@
             <a class="w3-button w3-round-xxlarge w3-small w3-light-black" href="#" target="_blank">Start now</a>
         </footer>
     </div>
-
 </body>
 
 </html>
