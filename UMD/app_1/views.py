@@ -24,7 +24,7 @@ from twilio.rest import Client
 #         )
 
 def home_function(request):
-    return render(request,'home.html')
+    return render(request,'Home.html')
     
 def donation_function(request) :
     context ={}
