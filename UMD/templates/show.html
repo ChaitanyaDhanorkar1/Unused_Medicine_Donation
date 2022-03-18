@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <link rel="stylesheet" href="./static/show.css"> -->
+    </head>
+    <body>
+        {{msg}}
+        <h2 id="head">Show All data</h2>
+        <div id="SecondDiv">
+            <form action="/">
+                <input type="submit" value="<<Back">
+
+            </form>
+        </div>
+        <div id="OneDiv">
+            <table class="center">
+                <thead>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Email ID</th>
+                    <th>Phone No.</th>
+                    <th>Adhaar No.</th>
+                    <th>Password</th>
+                    <th>Buttons</th>
+                </thead>
+                {% for d in data %}
+                <tr>
+                    <td>{{d.name}}</td>
+                    <td>{{d.address}}</td>
+                    <td>{{d.email}}</td>
+                    <td>{{d.phone}}</td>
+                    <td>{{d.adhaar}}</td>
+                    <td>{{d.pass1}}</td>
+                    <td>
+                        <a href="/edit?adhaar={{d.adhaar}}">Edit</a>
+                        <a href="/delete?adhaar={{d.adhaar}}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </body>
+</html>
