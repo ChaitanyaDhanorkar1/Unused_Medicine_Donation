@@ -1,0 +1,115 @@
+*{
+    padding:0px;
+    margin:0px;
+}
+body{
+	background-color: #4e7779;
+    background-repeat: no-repeat;
+	background-attachment: fixed;
+    background-size: 100% 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    margin: 0;
+    color: beige;
+}
+
+.container{
+    width:90%;
+    margin: auto;
+    overflow: hidden;
+}
+
+.container h3{
+	margin-top: 20px;
+}
+
+#my-header{
+    background-color: antiquewhite;
+    color: rgb(71, 52, 52);
+    padding: 15px 0px;
+}
+
+#navbar{
+    background-color: rgb(112, 124, 117);
+    font-size: 18px;
+}
+
+.left-nav a{
+    color:rgb(255, 255, 255);
+    text-decoration: none;
+}
+
+.left-nav a:hover{
+	color: rgb(122, 94, 41);
+}
+
+.left-nav ul{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.left-nav li{
+    display: inline;
+    padding-right: 18px;
+}
+
+.right-nav{
+    background-color: #c89d7c;
+	font-weight: bold;
+	position: absolute;
+	text-align: right;
+	top: 0px;
+	right: 0px;
+    padding: 5px;
+}
+
+.right-nav a{
+	color: #1e264b;
+    text-decoration: none;
+}
+
+.right-nav a:hover{
+	color: rgb(122, 94, 41);
+}
+
+.right-nav a:active{
+	color: crimson;
+}
+
+.right-nav li{
+	display: inline;
+    padding-right: 10px;
+}
+
+.message{
+	color: indianred;
+}
+
+.my-form{
+    padding:20px;
+}
+
+.my-form .form-entry{
+    padding-bottom: 16px;
+}
+
+.my-form label{
+    display: block;
+    padding-bottom: 5px;
+}
+
+.my-form input[type = "text"]{
+    padding:6px;
+    width:80%;
+}
+
+.btn{
+    background-color: #1e264b;
+    color: blanchedalmond;
+    padding:10px 15px;
+    border: none;
+}
+
+.btn:hover{
+	background-color: rgb(113, 143, 184);
+}
