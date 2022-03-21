@@ -1,55 +1,19 @@
-<!DOCTYPE html>
-{% load static %}
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type = "text/css" href="static/style.css">
-    </head>
-    <body>
-        <header id="my-header">
-            <div class = "container">
-                <h1>Unused Medicine Donation</h1>
-            </div>
-        </header>
-        <nav id="navbar">
-            <div class = "container">
-                <div class = "left-nav">
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <div class="container">
-            <div class="right-nav">
-                <ul>
-                    <li><a href="#">Login</a></li>
-                    <li><a href="#">Register</a></li>
-                    <li><a href="#">Admin Login</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class = "container">
-            <h3>Please login by entering the details:</h3>
-        </div>
-        <div class="container">
-            <form  class="my-form" method="POST" action='/login'>
-                {%csrf_token%}
-                <div class = "form-entry">
-                    <label>Adhaar No.</label><input required autofocus type="text" name="adhaar">
-                </div>
-                <div class = "form-entry">
-                    <label>Password</label><input required autofocus type="text" name="pass1"></h3>
-                </div>
-                <input class="btn" type="submit" value="login">
-                <div class = "message">{{msg}}</div>
-            </form>
+{% extends 'base.html' %}
+{% block content %}
+       <div class = "container">
+           <h3>Please login by entering the details:</h3>
        </div>
-    </body>
-</html>
+       <div class="container">
+           <form  class="my-form" method="POST" action='/login'>
+               {%csrf_token%}
+               <div class = "form-entry">
+                   <label>Adhaar No.</label><input required autofocus type="text" name="adhaar">
+               </div>
+               <div class = "form-entry">
+                   <label>Password</label><input required autofocus type="text" name="pass1"></h3>
+               </div>
+               <input class="btn" type="submit" value="login">
+               <div class = "message">{{msg}}</div>
+           </form>
+      </div>
+{% endblock %}

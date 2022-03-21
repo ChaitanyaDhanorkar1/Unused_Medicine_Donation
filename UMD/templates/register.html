@@ -1,57 +1,35 @@
-<!DOCTYPE html>
-{% load static %}
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- <link rel="stylesheet" href="{% static 'home.css' %}"> -->
-        <style>
-            body{
-                background-color: aquamarine;
-            }
-            #DivOne
-            {
-                background-color: rgb(226,225,223);
-                max-width:fit-content;
-                padding:1%;
-                margin-left:40%;
-                margin-top:8%;
-            }
-            #btn
-            {
-                margin-left:35%;
-            }
-            #DivTwo
-            {
-                margin-left:90%;
-            }
-        </style>
-    </head>
+{% extends 'base.html' %}
+{% block content %}
     <body>
-        {{msg}}
-       <div id="DivTwo">
-           <form action="/show">
-               <input type="submit" value="show records">
-           </form>
-       </div>
-       <div id="DivOne">
-           <form action="/send" method="POST">
+        <div class = "container">
+            <h3>Please register in order to use the site:</h3>
+        </div>
+       <div class="container">
+           <form class="my-form" action="/send" method="POST">
                {%csrf_token%}
-               <h3>Name<br><input  required autofocus type="text" name="name" ></h3>
-               <h3>Address<br><input required autofocus type="text" name="address"></h3>
-               <h3>Email ID<br><input required autofocus type="text" name="email"></h3>
-               <h3>Phone No.<br><input required autofocus type="text" name="phone"></h3>
-               <h3>Adhaar No.<br><input required autofocus type="text" name="adhaar"></h3>
-               <h3>Password<br><input required autofocus type="password" name="pass1"></h3>
-               <h3>Confirm Password<br><input required autofocus type="password" name="pass2"></h3>
-
-               <input type="submit" id="btn">
-
+                <div class = "form-entry">
+                    <label>Name</label><input  required autofocus type="text" name="name" >
+                </div>
+                <div class = "form-entry">
+                    <label>Address</label><input required autofocus type="text" name="address">
+                </div>
+                <div class = "form-entry">
+                    <label>Email ID</label><input required autofocus type="text" name="email">
+                </div>
+                <div class = "form-entry">
+                    <label>Phone No.</label><input required autofocus type="text" name="phone">
+                </div>
+                <div class = "form-entry">
+                    <label>Adhaar No.</label><input required autofocus type="text" name="adhaar">
+                <div class = "form-entry">
+                    <label>Password</label><input required autofocus type="text" name="pass1">
+                </div>
+                <div class = "form-entry">
+                    <label>Confirm Password</label><input required autofocus type="text" name="pass2">
+                </div>
+               <input class = "btn" type="submit" value = "Register">
+               <div class = "message">{{msg}}</div>
            </form>
 
        </div>
-    </body>
-</html>
+{% endblock %}
