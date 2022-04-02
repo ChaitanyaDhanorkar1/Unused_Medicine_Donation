@@ -167,7 +167,7 @@ def login_user(request):
             # A backend authenticated the credentials
             # login(request, user)
             msg="LoginSucess"
-            return render(request, 'home.html',{'msg':msg})
+            return render(request, 'profile.html',{'msg':msg})
         else:
             # No backend authenticated the credentials
             msg="Wrong Credentials"
