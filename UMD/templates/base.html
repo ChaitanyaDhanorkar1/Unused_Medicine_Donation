@@ -1,42 +1,39 @@
-{% load static %}
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type = "text/css" href="static/style.css">
-    </head>
-    <body>
-        <header id="my-header">
-            <div class = "container">
-                Unused Medicine Donation
-            </div>
-        </header>
-        <hr>
-        <nav id="navbar">
-            <div class = "container">
-                <div class = "left-nav">
-                    <ul>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <div class="container">
-            <div class="right-nav">
-                <ul>
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="/register">Register</a></li>
-                    <li><a href="/admin">Admin Login</a></li>
-                </ul>
-            </div>
-        </div>
-        {% block content %}
-        {% endblock %}
-    </body>
+
+<head>
+    <title>umd</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="static/base.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+
+<body>
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+        </label>
+        <label class="logo">Unused Medicine Donation</label>
+        <ul>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+            <li><a class="active" href="/admin">Admin Login</a></li>
+        </ul>
+        <br>
+    </nav>
+    <hr>
+    <div class = "leftnav">
+        <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/#">About</a></li>
+        <li><a href="/#">Contact Us</a></li>
+        </ul>
+    </div>
+    {% block content %}
+      <!-- <h1>enter your stuff here</h1> -->
+    {% endblock %}
+</body>
 </html>
