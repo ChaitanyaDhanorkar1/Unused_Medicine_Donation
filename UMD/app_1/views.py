@@ -72,12 +72,12 @@ def send(request):
         pass2=request.POST['pass2']
 
         if Entry.objects.filter(user_id=userid).first() is not None :
-            msg="UserID Already exists"
+            msg="UserID Already exists, please enter new ID"
             return render(request,'register.html',{'msg' : msg})
 
         global newentry
         global phonenum
-        newentry=Entry(name=name,address=address,email=email,phone=phone,adhaar=adhaar,pass1=pass1)
+        newentry=Entry(user_id=userid,name=name,address=address,email=email,phone=phone,adhaar=adhaar,pass1=pass1)
         phonenum=phone
 
         if pass1==pass2 : 
