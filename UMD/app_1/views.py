@@ -1,6 +1,4 @@
 from django.shortcuts import render,HttpResponse
-from datetime import date, datetime
-from django.contrib import messages
 from sqlalchemy import false
 from .forms import DonationForm,RequestForm,FeedbackForm
 from django.http import HttpResponse,HttpResponseRedirect
@@ -160,9 +158,11 @@ def login_user(request):
         if user is not None:
             # A backend authenticated the credentials
             # login(request, user)
+            request.session['name']=user.name
+            request.session['login']=True
 
-            msg="LoginSucess"
-            return render(request, 'profile.html',{'msg':msg})
+            userinfo={'userid' : user.user_id,'name' : user.name,'email' : user.email,'phone' : user.phone,'address' : user.address}
+            return render(request, 'profile.html',userinfo)
         else:
             # No backend authenticated the credentials
             msg="Wrong Credentials"

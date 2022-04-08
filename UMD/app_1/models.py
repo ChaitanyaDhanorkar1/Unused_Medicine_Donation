@@ -1,4 +1,5 @@
 from distutils.command.upload import upload
+from enum import auto
 from django.db import models
 import datetime
 # Create your models here.
@@ -6,6 +7,7 @@ import datetime
 # Model for Medicine Donation Page
 class DonationModel(models.Model):
 
+    donate_id=models.IntegerField(default=auto,primary_key=True)
     user_id = models.CharField(max_length=20, default=0)
     medicine_name = models.CharField(max_length=100, default="Medicine")
     medicine_quantity = models.IntegerField(default=0)
