@@ -8,6 +8,9 @@
        <div class="container">
            <form class="my-form" action="/send" method="POST">
                {%csrf_token%}
+               <div class = "form-entry">
+                <label>UserID</label><input  required autofocus type="text" name="user_id" >
+                </div>
                 <div class = "form-entry">
                     <label>Name</label><input  required autofocus type="text" name="name" >
                 </div>
