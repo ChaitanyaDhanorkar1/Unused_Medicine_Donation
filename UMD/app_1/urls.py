@@ -31,5 +31,6 @@ urlpatterns = [
     path('RecordEdited',views.RecordEdited),
     path('login',views.login_user),
     path('otpfunc',views.otpfunc),
-    path('register',views.register)
+    path('register',views.register),
+    
 ]

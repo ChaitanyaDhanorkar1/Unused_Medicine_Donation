@@ -8,20 +8,6 @@ from app_1.models import Entry
 import random
 from twilio.rest import Client
 
-# Create your views here.
-
-# def otpfunc(phone):
-#     str="+91"
-#     str+=phone
-#     otp = random.randint(1000,9999)
-#     account_sid="AC45939b8689e9dbf036e8e6a2c045a750"
-#     auth_token ="7fb82eeb2453d2ebc4453f34d1a38851"
-#     client=Client(account_sid,auth_token)
-#     msg = client.messages.create(
-#         body= f"Your OTP is {otp}",
-#         from_ = "+19107255048",
-#         to=str
-#         )
 
 def home_function(request):
     return render(request,'home.html')
@@ -72,11 +58,11 @@ def show(request):
 
 def enterotp(request):
     if request.method=='POST':
-        otp=request.POST['otp']
-
+        otp=request.POST['otp'] 
 
 def send(request):
     if request.method=='POST':
+        userid=request.POST['user_id']
         name=request.POST['name']
         address=request.POST['address']
         email=request.POST['email']
@@ -85,9 +71,13 @@ def send(request):
         pass1=request.POST['pass1']
         pass2=request.POST['pass2']
 
+        if Entry.objects.filter(user_id=userid).first() is not None :
+            msg="UserID Already exists, please enter new ID"
+            return render(request,'register.html',{'msg' : msg})
+
         global newentry
-        newentry=Entry(name=name,address=address,email=email,phone=phone,adhaar=adhaar,pass1=pass1)
         global phonenum
+        newentry=Entry(user_id=userid,name=name,address=address,email=email,phone=phone,adhaar=adhaar,pass1=pass1)
         phonenum=phone
 
         if pass1==pass2 : 
@@ -156,19 +146,21 @@ def RecordEdited(request):
         return HttpResponseRedirect("show")
     else:
         return HttpResponse("<h2>404-Error page not found !</h2>")
-        
+
+    
 def login_user(request):
     if request.method=="POST":
-        adhaar = request.POST.get('adhaar')
+        userid = request.POST.get('userid')
         pass1 = request.POST.get('pass1')
 
         # check if user has entered correct credentials
         # user = authenticate(adhaar=adhaar, pass1=pass1)
-        user=Entry.objects.filter(adhaar=adhaar,pass1=pass1).first()
+        user=Entry.objects.filter(user_id=userid,pass1=pass1).first()
 
         if user is not None:
             # A backend authenticated the credentials
             # login(request, user)
+
             msg="LoginSucess"
             return render(request, 'profile.html',{'msg':msg})
         else:
