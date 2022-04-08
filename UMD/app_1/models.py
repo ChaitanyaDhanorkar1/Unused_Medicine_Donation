@@ -1,3 +1,4 @@
+from distutils.command.upload import upload
 from django.db import models
 import datetime
 # Create your models here.
@@ -47,12 +48,14 @@ class FeedbackModel(models.Model):
 
 # model for registration
 class Entry(models.Model):
+    user_id = models.CharField(max_length=20, default="lr1")
     name=models.CharField(max_length=30,default="lr")
     address=models.CharField(max_length=30)
     email=models.CharField(max_length=30)
     phone=models.CharField(max_length=30)
     adhaar=models.CharField(max_length=12,primary_key=True)
     pass1=models.CharField(max_length=30)
+    image=models.ImageField(upload_to="static",default="static/er_diagram.jpeg")
 
     def __str__(self):
         return  self.name
