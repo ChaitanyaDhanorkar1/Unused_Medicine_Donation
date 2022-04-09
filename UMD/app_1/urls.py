@@ -23,7 +23,7 @@ urlpatterns = [
     path('medicine_donation',views.donation_function),
     path('medicine_request',views.request_function),
     path('user_feedback',views.feedback_function),
-     path('monetory_donation',views.monetory_function),
+    path('monetory_donation',views.monetory_function),
     path('show',views.show),
     path('send',views.send),
     path('delete',views.delete),
@@ -32,5 +32,6 @@ urlpatterns = [
     path('login',views.login_user),
     path('otpfunc',views.otpfunc),
     path('register',views.register),
+    # path('test',views.test)
     
 ]
