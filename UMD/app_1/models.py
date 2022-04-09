@@ -20,6 +20,7 @@ class DonationModel(models.Model):
 # Model for Medicine Request Page
 class RequestModel(models.Model):
 
+    request_id=models.IntegerField(default=auto,primary_key=True)
     user_id = models.CharField(max_length=20, default=0)
     medicine_name = models.CharField(max_length=100, default="Medicine")
     medicine_quantity = models.IntegerField(default=0)
