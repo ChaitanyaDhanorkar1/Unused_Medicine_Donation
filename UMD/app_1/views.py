@@ -21,7 +21,7 @@ def donation_function(request) :
     if form.is_valid():
         # save the form data to model
         form.save()  
-    context['form']= form
+    context['form']=form
     return render(request, "medicine_donation.html", context)
 
 def request_function(request) :
@@ -168,3 +168,12 @@ def login_user(request):
             msg="Wrong Credentials"
             return render(request, 'login.html',{'msg':msg})
     return render(request, 'login.html')
+
+
+    
+# def test(request):
+#     context={}
+#     form=DonationForm(request.POST or None, request.FILES or None)
+#     context['form']=form
+#     context['msg']="Successfully donated!"
+#     return render(request,"test.html",context)

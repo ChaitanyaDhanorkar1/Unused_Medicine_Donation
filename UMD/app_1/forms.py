@@ -4,7 +4,7 @@ from .models import DonationModel,RequestModel,FeedbackModel
 class DonationForm(forms.ModelForm):
     class Meta:
         model = DonationModel
-        fields = "__all__"  
+        fields="__all__"
 
 class RequestForm(forms.ModelForm):
     class Meta:
