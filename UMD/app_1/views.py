@@ -41,6 +41,9 @@ def request_function(request) :
     return render(request,"medicine_request.html")
 
 def feedback_function(request) :
+    if usersessions['login']==False :
+        msg="Please Login"
+        return render(request,'login.html',{'msg' : msg})
     context ={}
     # create object of form
     form = FeedbackForm(request.POST or None, request.FILES or None)      
