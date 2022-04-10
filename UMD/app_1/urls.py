@@ -40,7 +40,8 @@ urlpatterns = [
     path('approverequest',views.approverequest),
     path('rejectrequest',views.rejectrequest),
     path('userlogout',views.userlogout),
-    path('adminlogout',views.adminlogout)
+    path('adminlogout',views.adminlogout),
+    path('stocks',views.stocks)
     # path('test',views.test)
     
 ]

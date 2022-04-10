@@ -16,25 +16,27 @@ def monetory_function(request):
     return render(request,'monetory_donation.html')   
     
 def donation_function(request) :
+    if usersessions['login']==False :
+        msg="Please Login"
+        return render(request,'login.html',{'msg' : msg})
     if request.method=='POST':
-        
-        user_id=request.POST['user_id']
         medicine_name=request.POST['medicine_name']
         medicine_quantity=request.POST['medicine_quantity']
         donation_date=request.POST['donation_date']
         expiry_date=request.POST['expiry_date']
-        DonationModel(status="pending",user_id=user_id,medicine_name=medicine_name,medicine_quantity=medicine_quantity,donation_date=donation_date,expiry_date=expiry_date).save()
+        DonationModel(status="pending",user_id=usersessions['userid'],medicine_name=medicine_name,medicine_quantity=medicine_quantity,donation_date=donation_date,expiry_date=expiry_date).save()
         return render(request, "medicine_donation.html")
     return render(request,"medicine_donation.html")
 
 def request_function(request) :
+    if usersessions['login']==False :
+        msg="Please Login"
+        return render(request,'login.html',{'msg' : msg})
     if request.method=='POST':
-        status=request.POST['status']
-        user_id=request.POST['user_id']
         medicine_name=request.POST['medicine_name']
         medicine_quantity=request.POST['medicine_quantity']
         request_date=request.POST['request_date']
-        DonationModel.objects(status="pending",user_id=user_id,medicine_name=medicine_name,medicine_quantity=medicine_quantity,request_date=request_date).save()
+        DonationModel.objects(status="pending",user_id=usersessions['userid'],medicine_name=medicine_name,medicine_quantity=medicine_quantity,request_date=request_date).save()
         return render(request, "medicine_request.html")
     return render(request,"medicine_request.html")
 
@@ -271,3 +273,10 @@ def adminlogout(request):
     adminsessions['acid']=""
     adminsessions['login']=False
     return render(request,"home.html")
+
+def stocks(request):
+    if adminsessions['login']==False :
+        msg="Please Login"
+        return render(request,'AdminLogin.html',{'msg' : msg})
+    data=MedicineStockModel.objects.filter().all()
+    return render(request,"stocks.html",{'data':data})    
