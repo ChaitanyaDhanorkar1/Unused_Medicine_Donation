@@ -6,6 +6,7 @@ from app_1.models import Entry,DonationModel,MedicineStockModel
 import random
 from twilio.rest import Client
 
+sessions = {'login' : True,'userid' : ""}
 
 def home_function(request):
     return render(request,'home.html')
@@ -108,7 +109,7 @@ def otpget(phonenum):
     account_sid="AC45939b8689e9dbf036e8e6a2c045a750"
     auth_token ="344c3b6957a0d05faa18c75385c6bf82"
     client=Client(account_sid,auth_token)
-    msg = client.messages.create(
+    client.messages.create(
         body= f"Your OTP is {otp}",
         from_ = "+19107255048",
         to=str
@@ -133,15 +134,18 @@ def edit(request):
     return render(request,"edit.html",{'name':name,'address':address,'email':email,'phone':phone,'adhaar':adhaar,'pass1':pass1})
 
 def RecordEdited(request):
-    if request.method=='POST':
-        name=request.POST['name']
-        address=request.POST['address']
-        email=request.POST['email']
-        phone=request.POST['phone']
-        adhaar=request.POST['adhaar']
-        pass1=request.POST['pass1']
-        Entry.objects.filter(adhaar = adhaar).update(name=name,address=address,email=email,phone=phone,adhaar=adhaar,pass1=pass1)
-        return HttpResponseRedirect("show")
+    if  sessions['login']==True:
+        if request.method=='POST':
+            name=request.POST['name']
+            address=request.POST['address']
+            email=request.POST['email']
+            phone=request.POST['phone']
+            adhaar=request.POST['adhaar']
+            pass1=request.POST['pass1']
+            Entry.objects.filter(adhaar = adhaar).update(name=name,address=address,email=email,phone=phone,adhaar=adhaar,pass1=pass1)
+            return HttpResponseRedirect("show")
+        else:
+            return HttpResponse("<h1>f1</h1>") 
     else:
         return HttpResponse("<h2>404-Error page not found !</h2>")
 
@@ -157,10 +161,9 @@ def login_user(request):
 
         if user is not None:
             # A backend authenticated the credentials
-            # login(request, user)
-            request.session['name']=user.name
-            request.session['login']=True
-
+            # login(request, user)            
+            sessions['login']=True
+            sessions['userid']=userid
             userinfo={'userid' : user.user_id,'name' : user.name,'email' : user.email,'phone' : user.phone,'address' : user.address}
             return render(request, 'profile.html',userinfo)
         else:
