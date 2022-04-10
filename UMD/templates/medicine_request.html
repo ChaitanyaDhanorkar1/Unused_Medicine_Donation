@@ -10,12 +10,12 @@
     <title>Request Medicines</title>
 </head>
 <body>
-    {% extends 'base.html' %}
+    {% extends 'base2.html' %}
 
 
     {% block content %}
     <h3>Request medicines using the form given below:</h3>
-    <form class="my-form" action="/medicine_donation" method="POST">
+    <form class="my-form" action="/medicine_request" method="POST">
         {%csrf_token%}
 
          <!-- <div class = "form-entry">
@@ -28,7 +28,7 @@
              <label>Medicine Quantity</label><input required autofocus type="text" name="medicine_quantity">
          </div>
          <div class = "form-entry">
-             <label>Request Date</label><input required autofocus type="text" name="request_date">
+             <label>Required Before</label><input required autofocus type="text" name="request_date">
          </div>
         <input class = "btn" type="submit" value = "Submit">
     </form>

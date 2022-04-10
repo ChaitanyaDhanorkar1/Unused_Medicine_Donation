@@ -18,9 +18,8 @@
         </label>
         <label class="logo">Unused Medicine Donation</label>
         <ul>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-            <li><a class="active" href="/adminlogin">Admin Login</a></li>
+            <li><a>Hi&nbsp;&nbsp;{{userid}}!</a></li>
+            <li><a href="/userlogout">Logout</a></li>
         </ul>
         <br>
     </nav>
@@ -28,9 +27,10 @@
     <!-- <br> -->
     <div class = "leftnav">
         <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/contact">Contact Us</a></li>
+        <li><a href="/profile">Profile</a></li>
+        <li><a href="/medicine_donation">Donate</a></li>
+        <li><a href="/medicine_request">Request</a></li>
+        
         </ul>
     </div>
     {% block content %}
