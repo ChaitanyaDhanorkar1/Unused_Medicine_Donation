@@ -36,7 +36,7 @@ def request_function(request) :
         medicine_name=request.POST['medicine_name']
         medicine_quantity=request.POST['medicine_quantity']
         request_date=request.POST['request_date']
-        DonationModel.objects(status="pending",user_id=usersessions['userid'],medicine_name=medicine_name,medicine_quantity=medicine_quantity,request_date=request_date).save()
+        RequestModel(status="pending",user_id=usersessions['userid'],medicine_name=medicine_name,medicine_quantity=medicine_quantity,request_date=request_date).save()
         return render(request, "medicine_request.html")
     return render(request,"medicine_request.html")
 
@@ -245,26 +245,29 @@ def requests(request):
 
 def approverequest(request):
     if adminsessions['login']==False :
-        return render(request,'login.html',{'msg' : "please login"})
+        return render(request,'AdminLogin.html',{'msg' : "please login"})
     request_id=request.GET['request_id']
-    medicine_name=DonationModel.objects.filter(request_id=request_id).first().medicine_name
+    medicine_name=RequestModel.objects.filter(request_id=request_id).first().medicine_name
 
     if MedicineStockModel.objects.filter(medicine_name=medicine_name).first() is not None :
-        req=DonationModel.objects.filter(request_id=request_id).first().medicine_quantity
+        req=RequestModel.objects.filter(request_id=request_id).first().medicine_quantity
         curr=MedicineStockModel.objects.filter(medicine_name=medicine_name).first().medicine_quantity
         if req<curr :
+            RequestModel.objects.filter(request_id=request_id).update(status="Approve")
             MedicineStockModel.objects.filter(medicine_name=medicine_name).update(medicine_quantity=curr-req)
         else:
-            MedicineStockModel.objects.filter(medicine_name=medicine_name).update(medicine_quantity=0)
+            RequestModel.objects.filter(request_id=request_id).update(status="Not enough Medicine")
+
+            # MedicineStockModel.objects.filter(medicine_name=medicine_name).update(medicine_quantity=0)
   
     return HttpResponseRedirect("requests")
 
 def rejectrequest(request) :
     if adminsessions['login']==False :
         msg="Please Login"
-        return render(request,'login.html',{'msg' : msg})
+        return render(request,'AdminLogin.html',{'msg' : msg})
     request_id=request.GET['request_id']
-    DonationModel.objects.filter(request_id=request_id).update(status="Reject")
+    RequestModel.objects.filter(request_id=request_id).update(status="Reject")
     return HttpResponseRedirect("requests")
 
 def userlogout(request) :
@@ -283,3 +286,14 @@ def stocks(request):
         return render(request,'AdminLogin.html',{'msg' : msg})
     data=MedicineStockModel.objects.filter().all()
     return render(request,"stocks.html",{'data':data})    
+
+def contact(request):
+    return render(request,"contact.html")
+    
+def about(request):
+    return render(request,"about.html")
+
+def profile(request):
+    user=Entry.objects.filter(user_id=usersessions['userid']).first()
+    userinfo={'userid' : user.user_id,'name' : user.name,'email' : user.email,'phone' : user.phone,'address' : user.address}
+    return render(request,"profile.html",userinfo)
