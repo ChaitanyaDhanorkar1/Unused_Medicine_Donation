@@ -19,10 +19,10 @@
     <div class="donation_form">
         <form method="POST" action="/medicine_donation">
             {% csrf_token %}
-            <div class="form-group">
+            {% comment %} <div class="form-group">
                 <label>Enter User ID </label>
                 {{ form.user_id }}
-            </div>
+            </div> {% endcomment %}
             <div class="form-group">
                 
                 <label>Medicine Name</label>

@@ -2,11 +2,12 @@ from django.shortcuts import render,HttpResponse
 from sqlalchemy import false
 from .forms import DonationForm,RequestForm,FeedbackForm
 from django.http import HttpResponse,HttpResponseRedirect
-from app_1.models import Entry,DonationModel,MedicineStockModel
+from app_1.models import Activemembers, Entry,DonationModel,MedicineStockModel, RequestModel
 import random
 from twilio.rest import Client
 
-sessions = {'login' : True,'userid' : ""}
+usersessions = {'login' : False,'userid' : ""}
+adminsessions={'login' : False,'acid' : ""}
 
 def home_function(request):
     return render(request,'home.html')
@@ -20,6 +21,7 @@ def donation_function(request) :
     form = DonationForm(request.POST or None, request.FILES or None)      
     # check if form data is valid
     if form.is_valid():
+        form.user_id=usersessions['userid']
         # save the form data to model
         form.save()  
     context['form']=form
@@ -31,6 +33,7 @@ def request_function(request) :
     form = RequestForm(request.POST or None, request.FILES or None)      
     # check if form data is valid
     if form.is_valid():
+        form.user_id=usersessions['userid']
         # save the form data to model
         form.save()  
     context['form']= form
@@ -47,11 +50,13 @@ def feedback_function(request) :
     context['form']= form
     return render(request, "user_feedback.html", context)
 
-
 def register(request):
     return render(request,"register.html")
 
 def show(request):
+    if usersessions['login']==False :
+        msg="Please Login"
+        return render(request,'login.html',{'msg' : msg})    
     data=Entry.objects.all()
     return render(request,"show.html",{'data': data})
 
@@ -60,6 +65,9 @@ def enterotp(request):
         otp=request.POST['otp'] 
 
 def send(request):
+    if usersessions['login']==False :
+        msg="Please Login"
+        return render(request,'login.html',{'msg' : msg})
     if request.method=='POST':
         userid=request.POST['user_id']
         name=request.POST['name']
@@ -123,6 +131,9 @@ def delete(request):
     return HttpResponseRedirect("show")
 
 def edit(request):
+    if usersessions['login']==False :
+        msg="Please Login"
+        return render(request,'login.html',{'msg' : msg})
     adhaar=request.GET['adhaar']
     name=address=email=phone=pass1="Not Available"
     for data in Entry.objects.filter(adhaar=adhaar):
@@ -134,7 +145,7 @@ def edit(request):
     return render(request,"edit.html",{'name':name,'address':address,'email':email,'phone':phone,'adhaar':adhaar,'pass1':pass1})
 
 def RecordEdited(request):
-    if  sessions['login']==True:
+    if  usersessions['login']==True:
         if request.method=='POST':
             name=request.POST['name']
             address=request.POST['address']
@@ -148,8 +159,7 @@ def RecordEdited(request):
             return HttpResponse("<h1>f1</h1>") 
     else:
         return HttpResponse("<h2>404-Error page not found !</h2>")
-
-    
+   
 def login_user(request):
     if request.method=="POST":
         userid = request.POST.get('userid')
@@ -162,8 +172,8 @@ def login_user(request):
         if user is not None:
             # A backend authenticated the credentials
             # login(request, user)            
-            sessions['login']=True
-            sessions['userid']=userid
+            usersessions['login']=True
+            usersessions['userid']=userid
             userinfo={'userid' : user.user_id,'name' : user.name,'email' : user.email,'phone' : user.phone,'address' : user.address}
             return render(request, 'profile.html',userinfo)
         else:
@@ -173,6 +183,9 @@ def login_user(request):
     return render(request, 'login.html')
 
 def approvedonate(request) :
+    if adminsessions['login']==False :
+        msg="Please Login"
+        return render(request,'login.html',{'msg' : msg})
     donate_id=request.GET['donate_id']
     DonationModel.objects.filter(donate_id=donate_id).update(status="Approve")
     medicine_name=DonationModel.objects.filter(donate_id=donate_id).first().medicine_name
@@ -187,17 +200,75 @@ def approvedonate(request) :
     return HttpResponseRedirect("donations")
 
 def rejectdonate(request) :
+    if adminsessions['login']==False :
+        msg="Please Login"
+        return render(request,'login.html',{'msg' : msg})
     donate_id=request.GET['donate_id']
     DonationModel.objects.filter(donate_id=donate_id).update(status="Reject")
     return HttpResponseRedirect("donations")
 
 def donations(request) :
+    if adminsessions['login']==False :
+        msg="Please Login"
+        return render(request,'login.html',{'msg' : msg})
     data=DonationModel.objects.filter(status="pending")
     return render(request,'Donationcheck.html',{'data':data})
     
-# def test(request):
-#     context={}
-#     form=DonationForm(request.POST or None, request.FILES or None)
-#     context['form']=form
-#     context['msg']="Successfully donated!"
-#     return render(request,"test.html",context)
+def adminlogin(request):
+    if request.method=='POST':
+        acid=request.POST.get('acid')
+        pass1=request.POST.get('pass1')
+
+        member=Activemembers.objects.filter(acid=acid,pass1=pass1).first()
+
+        if member is not None:
+            adminsessions['login']=True
+            adminsessions['acid']=acid
+            data={'acid' : member.acid,'name' : member.name,'email' : member.email,'address' : member.address,'phone' : member.phone}
+            return render(request,'AdminProfile.html',data)
+        else :
+            msg="Wrong Credentials"
+            return render(request,'AdminLogin.html',{'msg' : msg})
+
+    return render(request,'AdminLogin.html')
+
+def requests(request):
+    if adminsessions['login']==False :
+        msg="Please Login"
+        return render(request,'login.html',{'msg' : msg})
+    data=RequestModel.objects.filter(status="pending")
+    return render(request,'Requestcheck.html',{'data' : data})
+
+def approverequest(request):
+    if adminsessions['login']==False :
+        return render(request,'login.html',{'msg' : "please login"})
+    request_id=request.GET['request_id']
+    medicine_name=DonationModel.objects.filter(request_id=request_id).first().medicine_name
+
+    if MedicineStockModel.objects.filter(medicine_name=medicine_name).first() is not None :
+        req=DonationModel.objects.filter(request_id=request_id).first().medicine_quantity
+        curr=MedicineStockModel.objects.filter(medicine_name=medicine_name).first().medicine_quantity
+        if req<curr :
+            MedicineStockModel.objects.filter(medicine_name=medicine_name).update(medicine_quantity=curr-req)
+        else:
+            MedicineStockModel.objects.filter(medicine_name=medicine_name).update(medicine_quantity=0)
+  
+    return HttpResponseRedirect("requests")
+
+def rejectrequest(request) :
+    if adminsessions['login']==False :
+        msg="Please Login"
+        return render(request,'login.html',{'msg' : msg})
+    request_id=request.GET['request_id']
+    DonationModel.objects.filter(request_id=request_id).update(status="Reject")
+    return HttpResponseRedirect("requests")
+
+def userlogout(request) :
+    usersessions['userid']=""
+    usersessions['login']=False
+    return render(request,"home.html")
+
+def adminlogout(request):
+    adminsessions['acid']=""
+    adminsessions['login']=False
+    return render(request,"home.html")

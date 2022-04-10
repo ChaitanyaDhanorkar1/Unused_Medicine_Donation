@@ -5,10 +5,10 @@
            <h3>Please login by entering the details:</h3>
        </div>
        <div class="container">
-           <form  class="my-form" method="POST" action='/login'>
+           <form  class="my-form" method="POST" action='/adminlogin'>
                {%csrf_token%}
                <div class = "form-entry">
-                   <label>Active_Member ID</label><input required autofocus type="text" name="activememberid">
+                   <label>Active_Member ID</label><input required autofocus type="text" name="acid">
                </div>
                <div class = "form-entry">
                    <label>Password</label><input required autofocus type="text" name="pass1"></h3>

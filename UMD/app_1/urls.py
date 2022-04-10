@@ -34,7 +34,13 @@ urlpatterns = [
     path('register',views.register),
     path('donations',views.donations),
     path('approvedonate',views.approvedonate),
-    path('rejectdonate',views.rejectdonate)
+    path('rejectdonate',views.rejectdonate),
+    path('adminlogin',views.adminlogin),
+    path('requests',views.requests),
+    path('approverequest',views.approverequest),
+    path('rejectrequest',views.rejectrequest),
+    path('userlogout',views.userlogout),
+    path('adminlogout',views.adminlogout)
     # path('test',views.test)
     
 ]
