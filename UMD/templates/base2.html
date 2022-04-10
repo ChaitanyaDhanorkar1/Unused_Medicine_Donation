@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>umd</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="static/base.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+
+<body>
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fa fa-bars"></i>
+        </label>
+        <label class="logo">Unused Medicine Donation</label>
+        <ul>
+            <li><a>Hi&nbsp;&nbsp;{{userid}}!</a></li>
+            <li><a href="/userlogout">Logout</a></li>
+        </ul>
+        <br>
+    </nav>
+    <!-- <hr> -->
+    <!-- <br> -->
+    <div class = "leftnav">
+        <ul>
+        <li><a href="/medicine_donation">Donate</a></li>
+        <li><a href="/medicine_request">Request</a></li>
+        <li><a href="/">My requests and donations</a></li>
+        <li><a href="/donations">See</a></li>
+        </ul>
+    </div>
+    {% block content %}
+      <!-- <h1>enter your stuff here</h1> -->
+    {% endblock %}
+</body>
+</html>
