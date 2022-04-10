@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-   <link rel="stylesheet" href="static/style.css">
-       <div class = "container">
-           <h3><b>Please login by entering the details:</b></h3>
-       </div>
-       <div class="container">
-           <form  class="my-form" method="POST" action='/login'>
-               {%csrf_token%}
-               <div class = "form-entry">
-                   <label>User ID</label><input required autofocus type="text" name="userid">
-               </div>
-               <div class = "form-entry">
-                   <label>Password</label><input required autofocus type="text" name="pass1"></h3>
-               </div>
-               <input class="btn" type="submit" value="login">
-               <div class = "message">{{msg}}</div>
-           </form>
-      </div>
+<link rel="stylesheet" href="./static/login.css">
+
+    <div class="wrapper">
+        <!-- <div class="logo"> <img
+                src="https://www.freepnglogos.com/uploads/twitter-logo-png/twitter-bird-symbols-png-logo-0.png" alt="">
+        </div> -->
+        <!-- <div class="text-center mt-4 name"> U </div> -->
+        <form class="p-3 mt-3"  method="POST" action='/login'>
+            {%csrf_token%}
+            <div class="form-field d-flex align-items-center">  <input type="text"
+                name="userid" id="userName" placeholder="Username"> </div>
+            <div class="form-field d-flex align-items-center"> <input type="password"
+                name="pass1" id="pwd" placeholder="Password"> </div> 
+                <input class="btn mt-3" type="submit" value="login">
+                <!-- <button class="btn mt-3">Login</button> -->
+                <div class = "message">{{msg}}</div>
+        </form>
+    </div>
 {% endblock %}

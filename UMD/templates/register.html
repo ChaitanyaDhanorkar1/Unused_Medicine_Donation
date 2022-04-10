@@ -1,39 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
-    <link rel="stylesheet" href="static/style.css">
-    <body>
-        <div class = "container">
-            <h3><b>Please register in order to use the site:</b></h3>
-        </div>
-       <div class="container">
-           <form class="my-form" action="/send" method="POST">
-               {%csrf_token%}
-               <div class = "form-entry">
-                <label>UserID</label><input  required autofocus type="text" name="user_id" >
-                </div>
-                <div class = "form-entry">
-                    <label>Name</label><input  required autofocus type="text" name="name" >
-                </div>
-                <div class = "form-entry">
-                    <label>Address</label><input required autofocus type="text" name="address">
-                </div>
-                <div class = "form-entry">
-                    <label>Email ID</label><input required autofocus type="text" name="email">
-                </div>
-                <div class = "form-entry">
-                    <label>Phone No.</label><input required autofocus type="text" name="phone">
-                </div>
-                <div class = "form-entry">
-                    <label>Adhaar No.</label><input required autofocus type="text" name="adhaar">
-                <div class = "form-entry">
-                    <label>Password</label><input required autofocus type="text" name="pass1">
-                </div>
-                <div class = "form-entry">
-                    <label>Confirm Password</label><input required autofocus type="text" name="pass2">
-                </div>
-               <input class = "btn" type="submit" value = "Register">
-               <div class = "message">{{msg}}</div>
-           </form>
+<link rel="stylesheet" href="static/login.css">
 
-       </div>
+<div class="wrapper">
+    <form class="p-3 mt-3" action="/send" method="POST">
+        {%csrf_token%}
+        <div class="form-field d-flex align-items-center">
+            <input required autofocus type="text" name="user_id" placeholder="User ID">
+        </div>
+        <div class="form-field d-flex align-items-center">
+            <input required autofocus type="text" name="name" placeholder="Name">
+        </div>
+        <div class="form-field d-flex align-items-center">
+            <input required autofocus type="text" name="address" placeholder="Address">
+        </div>
+        <div class="form-field d-flex align-items-center">
+            <input required autofocus type="text" name="email" placeholder="Email ID">
+        </div>
+        <div class="form-field d-flex align-items-center">
+            <input required autofocus type="text" name="phone" placeholder="Phone No.">
+        </div>
+        <div class="form-field d-flex align-items-center">
+            <input required autofocus type="text" name="adhaar" placeholder="Aadhaar No.">
+        </div>
+        <div class="form-field d-flex align-items-center">
+            <input required autofocus type="text" name="pass1" placeholder="Password">
+        </div>
+        <div class="form-field d-flex align-items-center">
+            <input required autofocus type="text" name="pass2" placeholder="Confirm Password">
+        </div>
+        <input class="btn mt-3" type="submit" value="Register">
+        <div class="message">{{msg}}</div>
+    </form>
+
+</div>
 {% endblock %}
