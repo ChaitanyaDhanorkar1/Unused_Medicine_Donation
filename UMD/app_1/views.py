@@ -1,6 +1,6 @@
 from django.shortcuts import render,HttpResponse
 from sqlalchemy import false
-from .forms import DonationForm,RequestForm,FeedbackForm
+from .forms import FeedbackForm
 from django.http import HttpResponse,HttpResponseRedirect
 from app_1.models import Activemembers, Entry,DonationModel,MedicineStockModel, RequestModel
 import random
@@ -16,28 +16,27 @@ def monetory_function(request):
     return render(request,'monetory_donation.html')   
     
 def donation_function(request) :
-    context ={}
-    # create object of form
-    form = DonationForm(request.POST or None, request.FILES or None)      
-    # check if form data is valid
-    if form.is_valid():
-        form.user_id=usersessions['userid']
-        # save the form data to model
-        form.save()  
-    context['form']=form
-    return render(request, "medicine_donation.html", context)
+    if request.method=='POST':
+        
+        user_id=request.POST['user_id']
+        medicine_name=request.POST['medicine_name']
+        medicine_quantity=request.POST['medicine_quantity']
+        donation_date=request.POST['donation_date']
+        expiry_date=request.POST['expiry_date']
+        DonationModel(status="pending",user_id=user_id,medicine_name=medicine_name,medicine_quantity=medicine_quantity,donation_date=donation_date,expiry_date=expiry_date).save()
+        return render(request, "medicine_donation.html")
+    return render(request,"medicine_donation.html")
 
 def request_function(request) :
-    context ={}
-    # create object of form
-    form = RequestForm(request.POST or None, request.FILES or None)      
-    # check if form data is valid
-    if form.is_valid():
-        form.user_id=usersessions['userid']
-        # save the form data to model
-        form.save()  
-    context['form']= form
-    return render(request, "medicine_request.html", context)
+    if request.method=='POST':
+        status=request.POST['status']
+        user_id=request.POST['user_id']
+        medicine_name=request.POST['medicine_name']
+        medicine_quantity=request.POST['medicine_quantity']
+        request_date=request.POST['request_date']
+        DonationModel.objects(status="pending",user_id=user_id,medicine_name=medicine_name,medicine_quantity=medicine_quantity,request_date=request_date).save()
+        return render(request, "medicine_request.html")
+    return render(request,"medicine_request.html")
 
 def feedback_function(request) :
     context ={}
@@ -210,7 +209,7 @@ def rejectdonate(request) :
 def donations(request) :
     if adminsessions['login']==False :
         msg="Please Login"
-        return render(request,'login.html',{'msg' : msg})
+        return render(request,'AdminLogin.html',{'msg' : msg})
     data=DonationModel.objects.filter(status="pending")
     return render(request,'Donationcheck.html',{'data':data})
     

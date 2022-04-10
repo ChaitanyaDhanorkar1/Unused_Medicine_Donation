@@ -1,15 +1,5 @@
 from django import forms
-from .models import DonationModel,RequestModel,FeedbackModel
-
-class DonationForm(forms.ModelForm):
-    class Meta:
-        model = DonationModel
-        exclude=('status',)
-
-class RequestForm(forms.ModelForm):
-    class Meta:
-        model = RequestModel
-        fields = "__all__"  
+from .models import FeedbackModel
 
 class FeedbackForm(forms.ModelForm):
     class Meta:
