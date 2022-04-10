@@ -8,6 +8,7 @@ import datetime
 class DonationModel(models.Model):
 
     donate_id=models.IntegerField(default=auto,primary_key=True)
+    status=models.CharField(default="pending",max_length=20)
     user_id = models.CharField(max_length=20, default=0)
     medicine_name = models.CharField(max_length=100, default="Medicine")
     medicine_quantity = models.IntegerField(default=0)
@@ -20,6 +21,7 @@ class DonationModel(models.Model):
 # Model for Medicine Request Page
 class RequestModel(models.Model):
 
+    status=models.CharField(default="pending",max_length=20)
     user_id = models.CharField(max_length=20, default=0)
     medicine_name = models.CharField(max_length=100, default="Medicine")
     medicine_quantity = models.IntegerField(default=0)

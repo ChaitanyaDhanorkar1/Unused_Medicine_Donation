@@ -2,7 +2,7 @@ from django.shortcuts import render,HttpResponse
 from sqlalchemy import false
 from .forms import DonationForm,RequestForm,FeedbackForm
 from django.http import HttpResponse,HttpResponseRedirect
-from app_1.models import Entry
+from app_1.models import Entry,DonationModel,MedicineStockModel
 import random
 from twilio.rest import Client
 
@@ -169,7 +169,28 @@ def login_user(request):
             return render(request, 'login.html',{'msg':msg})
     return render(request, 'login.html')
 
+def approvedonate(request) :
+    donate_id=request.GET['donate_id']
+    DonationModel.objects.filter(donate_id=donate_id).update(status="Approve")
+    medicine_name=DonationModel.objects.filter(donate_id=donate_id).first().medicine_name
 
+    if MedicineStockModel.objects.filter(medicine_name=medicine_name).first() is not None :
+        add=DonationModel.objects.filter(donate_id=donate_id).first().medicine_quantity
+        curr=MedicineStockModel.objects.filter(medicine_name=medicine_name).first().medicine_quantity
+        MedicineStockModel.objects.filter(medicine_name=medicine_name).update(medicine_quantity=curr+add)
+    else :
+        add=DonationModel.objects.filter(donate_id=donate_id).first().medicine_quantity
+        MedicineStockModel(medicine_name=medicine_name,medicine_quantity=add).save()  
+    return HttpResponseRedirect("donations")
+
+def rejectdonate(request) :
+    donate_id=request.GET['donate_id']
+    DonationModel.objects.filter(donate_id=donate_id).update(status="Reject")
+    return HttpResponseRedirect("donations")
+
+def donations(request) :
+    data=DonationModel.objects.filter(status="pending")
+    return render(request,'Donationcheck.html',{'data':data})
     
 # def test(request):
 #     context={}

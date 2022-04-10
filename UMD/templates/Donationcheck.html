@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        {{msg}}
+        <div id="OneDiv">
+            <table class="center">
+                <thead>
+                    <th>Donation_ID</th>
+                    <th>User_ID</th>
+                    <th>Medicine_Name</th>
+                    <th>Medicine_Quantity</th>
+                    <th>Expiry_Date</th>
+                    <th>Donated_Date</th>
+                    <th>Decision</th>
+                </thead>
+                {% for d in data %}
+                <tr>
+                    <td>{{d.donate_id}}</td>
+                    <td>{{d.user_id}}</td>
+                    <td>{{d.medicine_name}}</td>
+                    <td>{{d.medicine_quantity}}</td>
+                    <td>{{d.expiry_date}}</td>
+                    <td>{{d.donation_date}}</td>
+                    <td>
+                        <a href="/approvedonate?donate_id={{d.donate_id}}">Accept Medicines</a>
+                        <a href="/rejectdonate?donate_id={{d.donate_id}}">Safe Disposal</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </body>
+</html>

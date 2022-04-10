@@ -17,13 +17,14 @@
     <h3>Donate medicines using the form given below:</h3>
     
     <div class="donation_form">
-        <form method="POST">
+        <form method="POST" action="/medicine_donation">
             {% csrf_token %}
             <div class="form-group">
                 <label>Enter User ID </label>
                 {{ form.user_id }}
             </div>
             <div class="form-group">
+                
                 <label>Medicine Name</label>
                 {{ form.medicine_name }}
             </div>
