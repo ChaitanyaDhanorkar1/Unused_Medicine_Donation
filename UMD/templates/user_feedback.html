@@ -14,15 +14,12 @@
     {% block content %}
     <h3>Please provide your feedback about the website.</h3>
     <div class="feedback_form">
-        <form method="POST">
+        <form method="POST" action="/user_feedback">
             {% csrf_token %}
-            <div class="form-group">
-                <label>Enter User ID </label>
-                {{ form.user_id }}
-            </div>
+
             <div class="form-group">
                 <label>Enter your feedback</label>
-                {{ form.feedback }}
+                <input type="text" name="feedb" placeholder="Please provide feedback" required>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
