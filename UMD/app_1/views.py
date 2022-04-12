@@ -191,11 +191,11 @@ def RecordEdited(request):
                 Entry.objects.filter(user_id = usersessions['userid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1,image=img)
             else:
                 Entry.objects.filter(user_id = usersessions['userid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1)
-            return render(request,"adminedit.html",{'msg':"details edited successfully"})
+            return render(request,"edit.html",{'msg':"details edited successfully"})
         else:
-             return render(request,"adminedit.html",{'user':user})
+             return render(request,"edit.html",{'user':user})
     else:
-        return render(request, 'AdminLogin.html')
+        return render(request, 'login.html')
    
 def login_user(request):
     if request.method=="POST":
