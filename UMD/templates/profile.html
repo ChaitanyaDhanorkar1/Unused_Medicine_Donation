@@ -9,12 +9,14 @@
                 <div class="profile-nav col-md-3">
                         <div class="panel">
                                 <div class="user-heading round">
+                                        {% if user.image %}
                                         <a href="#">
                                                 <img src="{{user.image.url}}" alt="upload image">
                                         </a>
+                                        {% endif %}
                                         <h3>{{user.name}}</h3>
                                         <p>{{user.address}}</p>
-                                        <a href="#"> <i class="fa fa-edit"></i> Edit profile</a>
+                                        <a href="/RecordEdited"> <i class="fa fa-edit"></i> Edit profile</a>
                                 </div>
                         </div>
                 </div>

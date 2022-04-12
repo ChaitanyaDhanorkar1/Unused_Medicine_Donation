@@ -12,7 +12,7 @@ class DonationModel(models.Model):
     status=models.CharField(default="pending",max_length=20)
     user_id = models.CharField(max_length=20, default=0)
     medicine_name = models.CharField(max_length=100, default="Medicine")
-    medicine_quantity = models.CharField(default='0',max_length=300)
+    medicine_quantity = models.IntegerField(default='0',max_length=300)
     donation_date = models.DateField(default=datetime.datetime.now)
     expiry_date = models.DateField(default=datetime.datetime.now) 
     pickup_address=models.TextField(default="Not found")
@@ -29,7 +29,7 @@ class RequestModel(models.Model):
     medicine_quantity = models.CharField(max_length=50)
     request_date = models.DateField(default=datetime.datetime.now)
     purpose=models.TextField(null=True,blank=True)
-    image=models.ImageField(null=True,blank=True)
+    image=models.FileField(null=True,blank=True,default="/static/13.jpg")
 
     def __str__(self):
         return self.user_id
@@ -63,7 +63,7 @@ class Entry(models.Model):
     phone=models.CharField(max_length=30)
     adhaar=models.CharField(max_length=12,primary_key=True)
     pass1=models.CharField(max_length=30)
-    image=models.ImageField(null=True,blank=True)
+    image=models.FileField(null=True,blank=True)
 
     def __str__(self):
         return  self.name
@@ -76,6 +76,7 @@ class Activemembers(models.Model):
     phone=models.CharField(max_length=30)
     adhaar=models.CharField(max_length=12,primary_key=True)
     pass1=models.CharField(max_length=30)
+    image=models.FileField(null=True,blank=True)
 
     def __str__(self):
         return  self.name     

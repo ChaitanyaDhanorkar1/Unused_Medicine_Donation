@@ -27,5 +27,5 @@ admin.site.index_title = "Finally you realize"
 urlpatterns = [
     path('admin/', admin.site.urls),
       path('',include('app_1.urls')),
-]++static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT )
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT )
 

@@ -30,7 +30,7 @@ urlpatterns = [
     path('show',views.show),
     path('send',views.send),
     path('delete',views.delete),
-    path('edit',views.edit),
+    path('adminedit',views.adminedit),
     path('RecordEdited',views.RecordEdited),
     path('login',views.login_user),
     path('otpfunc',views.otpfunc),
@@ -48,5 +48,6 @@ urlpatterns = [
     path('contact',views.contact),
     path('about',views.about),
     path('profile',views.profile),
+    path('adminprofile',views.adminprofile),
     # path('test',views.test)
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT )

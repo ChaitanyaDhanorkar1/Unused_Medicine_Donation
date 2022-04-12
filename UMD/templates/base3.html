@@ -18,23 +18,24 @@
         </label>
         <label class="logo">Unused Medicine Donation</label>
         <ul>
-            <li><a>{{user.user_id}}</a></li>
-            <li><a href="/userlogout">Logout</a></li>
+            <li><a>{{user.acid}}</a></li>
+            <li><a href="/adminlogout">Logout</a></li>
         </ul>
         <br>
     </nav>
-    <!-- <hr> -->
-    <!-- <br> -->
-    <div class = "leftnav">
+
+    <div class="leftnav">
         <ul>
-        <li><a href="/profile">Profile</a></li>
-        <li><a href="/medicine_donation">Donate</a></li>
-        <li><a href="/medicine_request">Request</a></li>
-        <li><a href="/show">Records</a></li>
+            <li><a href="/adminprofile">Profile</a></li>
+            <li><a href="/donations">Check Donations</a></li>
+            <li><a href="/requests">Check Requests</a></li>
+            <li><a href="/stocks">Check Stocks</a></li>
+
         </ul>
     </div>
     {% block content %}
-      <!-- <h1>enter your stuff here</h1> -->
+    <!-- <h1>enter your stuff here</h1> -->
     {% endblock %}
 </body>
+
 </html>

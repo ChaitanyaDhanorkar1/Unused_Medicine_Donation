@@ -135,11 +135,11 @@ STATICFILES_DIRS = [
     # BASE_DIR / "static",
     # '/var/www/static/',
     STATIC_DIR,
-
 ]
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR,'media'),
-# )
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR,'static'),
+)
 
 
 

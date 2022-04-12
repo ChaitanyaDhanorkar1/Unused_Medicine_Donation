@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <link rel="stylesheet" href="static/login.css">
-<style>
+<!-- <style>
     #file{
         display: block;
         width: 100%;
@@ -9,9 +9,9 @@
         margin-bottom: 20px;
         margin-left: 4vw;
     }
-</style>
+</style> -->
 <div class="wrapper">
-    <form class="p-3 mt-3" action="/send" method="POST" enctype="multipart/form-data">
+    <form class="p-3 mt-3" action="/send" method="POST">
         {%csrf_token%}
         <div class="form-field d-flex align-items-center">
             <input required autofocus type="text" name="user_id" placeholder="User ID">
@@ -37,7 +37,7 @@
         <div class="form-field d-flex align-items-center">
             <input required autofocus type="text" name="pass2" placeholder="Confirm Password">
         </div>
-        <input type="file" name="pro" id="file" placeholder="Profile Photo">
+        <!-- <input type="image" name="imag" id="file" placeholder="Profile Photo"> -->
         <input class="btn mt-3" type="submit" value="Register">
         <div class="message">{{msg}}</div>
     </form>

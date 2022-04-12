@@ -1,11 +1,10 @@
-{% extends 'base2.html' %}
+{% extends 'base3.html' %}
 {% block content %}
 <link rel="stylesheet" href="./static/login.css">
 <div class="wrapper">
     <h2>Enter Details</h2>
-    <form action="/RecordEdited" method="POST" enctype="">
+    <form action="/adminedit" method="POST" enctype="">
         {%csrf_token%}
-
         <div class="form-field d-flex align-items-center"> <input type="text" name="name" placeholder="Enter Name"
                 value="{{user.name}}">
         </div>

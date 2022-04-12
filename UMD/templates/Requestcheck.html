@@ -1,41 +1,44 @@
-<!DOCTYPE html>
-{% load static %}
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
-    <body>
-        {{msg}}
-        <div id="OneDiv">
-            <table class="center">
-                <thead>
-                    <th>Request_ID</th>
-                    <th>User_ID</th>
-                    <th>Medicine_Name</th>
-                    <th>Medicine_Quantity</th>
-                    <th>Expiry_Date</th>
-                    <th>Donated_Date</th>
-                    <th>Decision</th>
-                </thead>
-                {% for d in data %}
-                <tr>
-                    <td>{{d.request_id}}</td>
-                    <td>{{d.user_id}}</td>
-                    <td>{{d.medicine_name}}</td>
-                    <td>{{d.medicine_quantity}}</td>
-                    <td>{{d.expiry_date}}</td>
-                    <td>{{d.donation_date}}</td>
-                    <td>
-                        <a href="/approverequest?request_id={{d.request_id}}">Supply Medicines</a>
-                        <a href="/rejectrequest?request_id={{d.request_id}}">Reject Proposal</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
-    </body>
-</html>
+{% extends 'base3.html' %}
+{% block content %}
+<link rel="stylesheet" href="./static/table.css">
+<style>
+    .discision a {
+        /* margin-top: 0.5; */
+        padding-top: 0.6vw;
+        display: inline-block;
+        width: 49%;
+        height: 2vw;
+        box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #fff;
+        vertical-align: bottom;
+
+    }
+</style>
+<h2>Medicine Request</h2>
+<table>
+    <thead>
+        <th>Request_ID</th>
+        <th>User_ID</th>
+        <th>Medicine_Name</th>
+        <th>Medicine_Quantity</th>
+        <th>Expiry_Date</th>
+        <th>Donated_Date</th>
+        <th>Decision</th>
+    </thead>
+    {% for d in data %}
+    <tr>
+        <td>{{d.request_id}}</td>
+        <td>{{d.user_id}}</td>
+        <td>{{d.medicine_name}}</td>
+        <td>{{d.medicine_quantity}}</td>
+        <td>{{d.expiry_date}}</td>
+        <td>{{d.donation_date}}</td>
+        <td>
+            <div class="discision">
+                <a href="/approverequest?request_id={{d.request_id}}">Supply Medicines</a>
+                <a href="/rejectrequest?request_id={{d.request_id}}">Reject Proposal</a>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

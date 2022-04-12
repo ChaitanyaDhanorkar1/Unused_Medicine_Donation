@@ -47,7 +47,7 @@ def request_function(request) :
         medicine_name=request.POST['medicine_name']
         medicine_quantity=request.POST['medicine_quantity']
         purpose=request.POST['purpose']
-        img=request.POST['imag']
+        img=request.FILES['imag']
         RequestModel(status="pending",user_id=usersessions['userid'],medicine_name=medicine_name,medicine_quantity=medicine_quantity,purpose=purpose,image=img).save()
         return render(request, "medicine_request.html",{'user':user,'msg' : "request sent successfully"})
     return render(request,"medicine_request.html",{'user':user,'msg' : ""})
@@ -72,9 +72,11 @@ def register(request):
 def show(request):
     if usersessions['login']==False :
         msg="Please Login"
-        return render(request,'login.html',{'msg' : msg})    
-    data=Entry.objects.all()
-    return render(request,"show.html",{'data': data})
+        return render(request,'login.html',{'msg' : msg})  
+    user=Entry.objects.filter(user_id=usersessions['userid']).first()  
+    d=DonationModel.objects.filter(user_id=usersessions['userid']).all()
+    r=RequestModel.objects.filter(user_id=usersessions['userid']).all()
+    return render(request,"show.html",{'d':d,'r':r,'user':user})
 
 def enterotp(request):
     if request.method=='POST':
@@ -93,16 +95,15 @@ def send(request):
         adhaar=request.POST['adhaar']
         pass1=request.POST['pass1']
         pass2=request.POST['pass2']
-        pro=request.POST['pro']
+        # img=request.FILES['imag']
         if Entry.objects.filter(user_id=userid).first() is not None :
             msg="UserID Already exists, please enter new ID"
             return render(request,'register.html',{'msg' : msg})
             
         global newentry
         global phonenum
-        newentry=Entry(user_id=userid,name=name,address=address,email=email,phone=phone,adhaar=adhaar,pass1=pass1,image=pro)
+        newentry=Entry(user_id=userid,name=name,address=address,email=email,phone=phone,adhaar=adhaar,pass1=pass1)
         phonenum=phone
-
         if pass1==pass2 : 
             global otpgot
             otpgot=otpget(phonenum)
@@ -146,35 +147,55 @@ def delete(request):
     Entry.objects.filter(adhaar=adhaar).delete()
     return HttpResponseRedirect("show")
 
-def edit(request):
-    if usersessions['login']==False :
-        msg="Please Login"
-        return render(request,'login.html',{'msg' : msg})
-    adhaar=request.GET['adhaar']
-    name=address=email=phone=pass1="Not Available"
-    for data in Entry.objects.filter(adhaar=adhaar):
-        name=data.name
-        address=data.address
-        email=data.email
-        phone=data.phone
-        pass1=data.pass1
-    return render(request,"edit.html",{'name':name,'address':address,'email':email,'phone':phone,'adhaar':adhaar,'pass1':pass1})
-
-def RecordEdited(request):
-    if  usersessions['login']==True:
+def adminedit(request):
+    if  adminsessions['login']==True:
+        user=Activemembers.objects.filter(acid=adminsessions['acid']).first()
         if request.method=='POST':
             name=request.POST['name']
             address=request.POST['address']
             email=request.POST['email']
             phone=request.POST['phone']
-            adhaar=request.POST['adhaar']
+            # adhaar=request.POST['adhaar']
+            x=request.POST['imag']
             pass1=request.POST['pass1']
-            Entry.objects.filter(adhaar = adhaar).update(name=name,address=address,email=email,phone=phone,adhaar=adhaar,pass1=pass1)
-            return HttpResponseRedirect("show")
+            pass2=request.POST['pass2']
+            if pass1 != pass2:
+                return render(request,"adminedit.html",{'msg':"please enter the passoword"})
+            if x:
+                img=request.FILES['imag']
+                Activemembers.objects.filter(acid = adminsessions['acid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1,image=img)
+            else:
+                Activemembers.objects.filter(acid = adminsessions['acid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1)
+            return render(request,"adminedit.html",{'msg':"details edited successfully"})
         else:
-            return HttpResponse("<h1>f1</h1>") 
+             return render(request,"adminedit.html",{'user':user})
     else:
-        return HttpResponse("<h2>404-Error page not found !</h2>")
+        return render(request, 'Adminlogin.html')
+
+def RecordEdited(request):
+    if  usersessions['login']==True:
+        user=Entry.objects.filter(user_id=usersessions['userid']).first()
+        if request.method=='POST':
+            name=request.POST['name']
+            address=request.POST['address']
+            email=request.POST['email']
+            phone=request.POST['phone']
+            # adhaar=request.POST['adhaar']
+            x=request.POST['imag']
+            pass1=request.POST['pass1']
+            pass2=request.POST['pass2']
+            if pass1 != pass2:
+                return render(request,"edit.html",{'msg':"please enter the passoword"})
+            if x:
+                img=request.FILES['imag']
+                Entry.objects.filter(user_id = usersessions['userid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1,image=img)
+            else:
+                Entry.objects.filter(user_id = usersessions['userid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1)
+            return render(request,"adminedit.html",{'msg':"details edited successfully"})
+        else:
+             return render(request,"adminedit.html",{'user':user})
+    else:
+        return render(request, 'AdminLogin.html')
    
 def login_user(request):
     if request.method=="POST":
@@ -228,20 +249,18 @@ def donations(request) :
         msg="Please Login"
         return render(request,'AdminLogin.html',{'msg' : msg})
     data=DonationModel.objects.filter(status="pending")
-    return render(request,'Donationcheck.html',{'data':data})
+    user=Activemembers.objects.filter(acid=adminsessions['acid']).first()
+    return render(request,'Donationcheck.html',{'data':data,'user':user})
     
 def adminlogin(request):
     if request.method=='POST':
         acid=request.POST.get('acid')
         pass1=request.POST.get('pass1')
-
         member=Activemembers.objects.filter(acid=acid,pass1=pass1).first()
-
         if member is not None:
             adminsessions['login']=True
             adminsessions['acid']=acid
-            data={'acid' : member.acid,'name' : member.name,'email' : member.email,'address' : member.address,'phone' : member.phone}
-            return render(request,'AdminProfile.html',data)
+            return render(request,'AdminProfile.html',{'user':member})
         else :
             msg="Wrong Credentials"
             return render(request,'AdminLogin.html',{'msg' : msg})
@@ -253,7 +272,8 @@ def requests(request):
         msg="Please Login"
         return render(request,'login.html',{'msg' : msg})
     data=RequestModel.objects.filter(status="pending")
-    return render(request,'Requestcheck.html',{'data' : data})
+    user=Activemembers.objects.filter(acid=adminsessions['acid']).first()
+    return render(request,'Requestcheck.html',{'data' : data ,'user':user})
 
 def approverequest(request):
     if adminsessions['login']==False :
@@ -270,8 +290,6 @@ def approverequest(request):
         else:
             RequestModel.objects.filter(request_id=request_id).update(status="Not enough Medicine")
 
-            # MedicineStockModel.objects.filter(medicine_name=medicine_name).update(medicine_quantity=0)
-  
     return HttpResponseRedirect("requests")
 
 def rejectrequest(request) :
@@ -296,8 +314,9 @@ def stocks(request):
     if adminsessions['login']==False :
         msg="Please Login"
         return render(request,'AdminLogin.html',{'msg' : msg})
+    user=Activemembers.objects.filter(acid=adminsessions['acid']).first()
     data=MedicineStockModel.objects.filter().all()
-    return render(request,"stocks.html",{'data':data})    
+    return render(request,"stocks.html",{'data':data,'user':user})    
 
 def contact(request):
     return render(request,"contact.html")
@@ -306,6 +325,16 @@ def about(request):
     return render(request,"about.html")
 
 def profile(request):
-    user=Entry.objects.filter(user_id=usersessions['userid']).first()
-    userinfo={'user' : user}
-    return render(request, 'profile.html',userinfo)
+    if(usersessions['login']):
+        user=Entry.objects.filter(user_id=usersessions['userid']).first()
+        userinfo={'user' : user}
+        return render(request, 'profile.html',userinfo)
+    else:
+        return render(request,'login.html')
+        
+def adminprofile(request):
+    if(adminsessions['login']):
+        user=Activemembers.objects.filter(acid=adminsessions['acid']).first()
+        return render(request,'AdminProfile.html' ,{'user':user})
+    else:
+        return render(request,'adminlogin.html')
