@@ -321,12 +321,6 @@ def stocks(request):
     data=MedicineStockModel.objects.filter().all()
     return render(request,"stocks.html",{'data':data,'user':user})    
 
-def contact(request):
-    return render(request,"contact.html")
-    
-def about(request):
-    return render(request,"about.html")
-
 def profile(request):
     if(usersessions['login']):
         user=Entry.objects.filter(user_id=usersessions['userid']).first()

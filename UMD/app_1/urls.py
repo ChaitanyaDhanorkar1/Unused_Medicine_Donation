@@ -45,8 +45,6 @@ urlpatterns = [
     path('userlogout',views.userlogout),
     path('adminlogout',views.adminlogout),
     path('stocks',views.stocks),
-    path('contact',views.contact),
-    path('about',views.about),
     path('profile',views.profile),
     path('adminprofile',views.adminprofile),
     # path('test',views.test)

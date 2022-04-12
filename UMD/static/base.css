@@ -136,6 +136,34 @@ nav ul li a:hover {
     }
 }
 
+/* about css */
+.about{
+    display: block;
+}
+.about .who{
+        text-align: center;
+    }
+   .about span{
+        color: #2abc9f;
+    }
+  .about img{
+       width: 50%;
+       float: left;
+       padding: 0.5%;
+       margin: 1%;
+       /* margin-right: 3%; */
+
+        /* box-shadow: 13px 13px 20px black, -13px -13px 20px #cbced1; */
+   }
+  .about .c{
+        margin: 1%;
+        width: 45%;
+        float: left;
+        padding: 0.5%;
+        font-size: 1.3vw;
+        margin-top: 20px;
+
+   }
 
 
 @media (max-width:858px) {
