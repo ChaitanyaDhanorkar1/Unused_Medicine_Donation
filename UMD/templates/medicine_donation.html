@@ -1,51 +1,44 @@
-<<<<<<< HEAD
 {% extends 'base2.html' %}
 {% block content %}
-<link rel="stylesheet" href="static/style.css">
-<div class="container">
-    <h3><b>Donate medicines using the form given below:</b></h3>
-=======
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    
-    <title>Donate Medicines</title>
-</head>
-<body>
-    {% extends 'base2.html' %}
+<link rel="stylesheet" href="./static/login.css">
+<style>
+    .address {
+        width: 100%;
+        height: 40px;
+        margin: 5px;
+        margin-bottom: 20px;
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        /* text-align: center; */
+    }
+    .message{
+        width: 100%;
+        /* text-align: center; */
+        margin: 20px;
+    }
+</style>
+<div class="wrapper">
+    <form class="p-3 mt-3" action="/medicine_donation" method="POST">
+    <!-- <form class="p-3 mt-3" method="POST" action='/login'> -->
+    {%csrf_token%}
 
-    {% block content %}
-    <h3>Donate medicines using the form given below:</h3>
-    
->>>>>>> c826258037e20256ed972b4d1eaa6c1991a20474
-    <form class="my-form" action="/medicine_donation" method="POST">
-        {%csrf_token%}
-
-        <div class="form-entry">
-            <label>Medicine Name</label><input required autofocus type="text" name="medicine_name">
-        </div>
-        <div class="form-entry">
-            <label>Medicine Quantity</label><input required autofocus type="text" name="medicine_quantity">
-        </div>
-        <div class="form-entry">
-            <label>Donation Date</label><input required autofocus type="text" name="donation_date">
-        </div>
-        <div class="form-entry">
-            <label>Expiry Date</label><input required autofocus type="text" name="expiry_date">
-        </div>
-        <input class="btn" type="submit" value="Submit">
-    </form>
+    <div class="form-field d-flex align-items-center"> <input type="text" name="medicine_name"
+            placeholder="Medicine Name">
+    </div>
+    <div class="form-field d-flex align-items-center"> <input type="text" name="medicine_quantity"
+            placeholder="Medicine Quantity">
+    </div>
+    <div class="form-field d-flex align-items-center"> <input type="date" name="expiry_date" placeholder="Expiry Date">
+    </div>
+    <div class="form-field d-flex align-items-center"> <input type="text" name="phone" placeholder="Phone No">
+    </div>
+    <div> <input class="address" type="textarea" name="address"
+            placeholder="Pickup Address">
+    </div>
+    <!-- <input class="btn mt-3" type="submit" value="medicine_donation"> -->
+    <input class="btn mt-3" type="submit" value="submit">
+</form>
+    <div class="message">{{msg}}</div>
 </div>
-
 {% endblock %}
-
-<!--The following line is to use bootstrap in our web pages-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"></script>
-<!--New Form-->

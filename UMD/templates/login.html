@@ -1,21 +1,30 @@
 {% extends 'base.html' %}
 {% block content %}
 <link rel="stylesheet" href="./static/login.css">
+<style>
+    h2 {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+</style>
 
-    <div class="wrapper">
-        <!-- <div class="logo"> <img
-                src="https://www.freepnglogos.com/uploads/twitter-logo-png/twitter-bird-symbols-png-logo-0.png" alt="">
-        </div> -->
-        <!-- <div class="text-center mt-4 name"> U </div> -->
-        <form class="p-3 mt-3"  method="POST" action='/login'>
-            {%csrf_token%}
-            <div class="form-field d-flex align-items-center">  <input type="text"
-                name="userid" id="userName" placeholder="Username"> </div>
-            <div class="form-field d-flex align-items-center"> <input type="password"
-                name="pass1" id="pwd" placeholder="Password"> </div> 
-                <input class="btn mt-3" type="submit" value="login">
-                <!-- <button class="btn mt-3">Login</button> -->
-                <div class = "message">{{msg}}</div>
-        </form>
-    </div>
+<div class="wrapper">
+    <h2>User login</h2>
+    <form class="p-3 mt-3" method="POST" action='/login'>
+        {%csrf_token%}
+        <div class="form-field d-flex align-items-center"> <input type="text" name="userid" id="userName"
+                placeholder="Username">
+        </div>
+
+        <div class="form-field d-flex align-items-center"> <input type="password" name="pass1" id="pwd"
+                placeholder="Password">
+        </div>
+
+        <input class="btn mt-3" type="submit" value="login">
+
+    </form>
+    <div class="message">{{msg}}</div>
+</div>
 {% endblock %}

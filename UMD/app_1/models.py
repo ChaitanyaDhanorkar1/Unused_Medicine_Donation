@@ -1,7 +1,10 @@
 from distutils.command.upload import upload
+from email.policy import default
 from enum import auto
 from django.db import models
 import datetime
+
+from django.forms import FileField
 # Create your models here.
 
 class DonationModel(models.Model):
@@ -9,9 +12,11 @@ class DonationModel(models.Model):
     status=models.CharField(default="pending",max_length=20)
     user_id = models.CharField(max_length=20, default=0)
     medicine_name = models.CharField(max_length=100, default="Medicine")
-    medicine_quantity = models.IntegerField(default=0)
-    donation_date = models.DateField(default=datetime.datetime.today)
-    expiry_date = models.DateField(default=datetime.datetime.today) 
+    medicine_quantity = models.CharField(default='0',max_length=300)
+    donation_date = models.DateField(default=datetime.datetime.now)
+    expiry_date = models.DateField(default=datetime.datetime.now) 
+    pickup_address=models.TextField(default="Not found")
+    phone_no=models.CharField(default="Not found",max_length=20)
     def __str__(self):
         return self.user_id
 
@@ -21,8 +26,11 @@ class RequestModel(models.Model):
     status=models.CharField(default="pending",max_length=20)
     user_id = models.CharField(max_length=20, default=0)
     medicine_name = models.CharField(max_length=100, default="Medicine")
-    medicine_quantity = models.IntegerField(default=0)
-    request_date = models.DateField(default=datetime.datetime.today)
+    medicine_quantity = models.CharField(max_length=50)
+    request_date = models.DateField(default=datetime.datetime.now)
+    purpose=models.TextField(null=True,blank=True)
+    image=models.ImageField(null=True,blank=True)
+
     def __str__(self):
         return self.user_id
 
@@ -31,7 +39,7 @@ class MedicineStockModel(models.Model):
     
     medicine_name = models.CharField(max_length=100, default="Medicine")
     medicine_quantity = models.IntegerField(default=0)
-    expiry_date = models.DateField(default=datetime.datetime.today())
+    expiry_date = models.DateField(default=datetime.datetime.now)
     
     def __str__(self):
         return self.medicine_name
@@ -50,12 +58,12 @@ class FeedbackModel(models.Model):
 class Entry(models.Model):
     user_id = models.CharField(max_length=20, default="lr1")
     name=models.CharField(max_length=30,default="lr")
-    address=models.CharField(max_length=30)
+    address=models.CharField(max_length=400)
     email=models.CharField(max_length=30)
     phone=models.CharField(max_length=30)
     adhaar=models.CharField(max_length=12,primary_key=True)
     pass1=models.CharField(max_length=30)
-    image=models.ImageField(upload_to="static",default="static/er_diagram.jpeg")
+    image=models.ImageField(null=True,blank=True)
 
     def __str__(self):
         return  self.name

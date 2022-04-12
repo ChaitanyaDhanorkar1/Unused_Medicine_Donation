@@ -1,4 +1,8 @@
+from datetime import datetime
+from distutils.command.upload import upload
+from email.policy import default
 from django.shortcuts import render,HttpResponse
+from requests import session
 from sqlalchemy import false
 from .forms import FeedbackForm
 from django.http import HttpResponse,HttpResponseRedirect
@@ -19,26 +23,34 @@ def donation_function(request) :
     if usersessions['login']==False :
         msg="Please Login"
         return render(request,'login.html',{'msg' : msg})
-    if request.method=='POST':
+    user=Entry.objects.filter(user_id=usersessions['userid']).first()
+    if request.method=="POST":
+        msg="thanks for initiation"
         medicine_name=request.POST['medicine_name']
         medicine_quantity=request.POST['medicine_quantity']
-        donation_date=request.POST['donation_date']
         expiry_date=request.POST['expiry_date']
-        DonationModel(status="pending",user_id=usersessions['userid'],medicine_name=medicine_name,medicine_quantity=medicine_quantity,donation_date=donation_date,expiry_date=expiry_date).save()
-        return render(request, "medicine_donation.html")
-    return render(request,"medicine_donation.html")
+        phone=request.POST['phone']
+        address=request.POST['address']
+        if expiry_date == '':
+                 return render(request, "medicine_donation.html",{'msg' : "please enter correct date"})
+        b=DonationModel(status="pending",user_id=usersessions['userid'],medicine_name=medicine_name,medicine_quantity=medicine_quantity,expiry_date=expiry_date,pickup_address=address,phone_no=phone)
+        b.save()
+        return render(request, "medicine_donation.html",{'user':user,'msg' : msg})
+    return render(request,"medicine_donation.html",{'user':user,'msg' : ""})
 
 def request_function(request) :
     if usersessions['login']==False :
         msg="Please Login"
         return render(request,'login.html',{'msg' : msg})
+    user=Entry.objects.filter(user_id=usersessions['userid']).first()
     if request.method=='POST':
         medicine_name=request.POST['medicine_name']
         medicine_quantity=request.POST['medicine_quantity']
-        request_date=request.POST['request_date']
-        RequestModel(status="pending",user_id=usersessions['userid'],medicine_name=medicine_name,medicine_quantity=medicine_quantity,request_date=request_date).save()
-        return render(request, "medicine_request.html")
-    return render(request,"medicine_request.html")
+        purpose=request.POST['purpose']
+        img=request.POST['imag']
+        RequestModel(status="pending",user_id=usersessions['userid'],medicine_name=medicine_name,medicine_quantity=medicine_quantity,purpose=purpose,image=img).save()
+        return render(request, "medicine_request.html",{'user':user,'msg' : "request sent successfully"})
+    return render(request,"medicine_request.html",{'user':user,'msg' : ""})
 
 def feedback_function(request) :
     if usersessions['login']==False :
@@ -69,9 +81,9 @@ def enterotp(request):
         otp=request.POST['otp'] 
 
 def send(request):
-    if usersessions['login']==False :
-        msg="Please Login"
-        return render(request,'login.html',{'msg' : msg})
+    # if usersessions['login']==False :
+    #     msg="Please Login"
+    #     return render(request,'login.html',{'msg' : msg})
     if request.method=='POST':
         userid=request.POST['user_id']
         name=request.POST['name']
@@ -81,14 +93,14 @@ def send(request):
         adhaar=request.POST['adhaar']
         pass1=request.POST['pass1']
         pass2=request.POST['pass2']
-
+        pro=request.POST['pro']
         if Entry.objects.filter(user_id=userid).first() is not None :
             msg="UserID Already exists, please enter new ID"
             return render(request,'register.html',{'msg' : msg})
-
+            
         global newentry
         global phonenum
-        newentry=Entry(user_id=userid,name=name,address=address,email=email,phone=phone,adhaar=adhaar,pass1=pass1)
+        newentry=Entry(user_id=userid,name=name,address=address,email=email,phone=phone,adhaar=adhaar,pass1=pass1,image=pro)
         phonenum=phone
 
         if pass1==pass2 : 
@@ -178,7 +190,7 @@ def login_user(request):
             # login(request, user)            
             usersessions['login']=True
             usersessions['userid']=userid
-            userinfo={'userid' : user.user_id,'name' : user.name,'email' : user.email,'phone' : user.phone,'address' : user.address}
+            userinfo={'user' : user}
             return render(request, 'profile.html',userinfo)
         else:
             # No backend authenticated the credentials
@@ -295,5 +307,5 @@ def about(request):
 
 def profile(request):
     user=Entry.objects.filter(user_id=usersessions['userid']).first()
-    userinfo={'userid' : user.user_id,'name' : user.name,'email' : user.email,'phone' : user.phone,'address' : user.address}
-    return render(request,"profile.html",userinfo)
+    userinfo={'user' : user}
+    return render(request, 'profile.html',userinfo)
