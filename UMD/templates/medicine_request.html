@@ -5,7 +5,7 @@
         width: 100%;
         text-align: center;
         margin-bottom: 20px;
-        margin-left: 4vw;
+        margin-left: 2vw;
     }
 
     .purpose {
@@ -16,6 +16,13 @@
         padding: 10px;
         border-radius: 10px;
         border: none;
+    }
+    .abc{
+        display:inline-block;
+        width:100%;
+        text-align:center;
+        margin-bottom:10px;
+        color:green;s
     }
 </style>
 <link rel="stylesheet" href="./static/login.css">
@@ -28,13 +35,16 @@
         <div class="form-field d-flex align-items-center"> <input type="text" name="medicine_name"
                 placeholder="Medicine Name">
         </div>
-        <div class="form-field d-flex align-items-center"> <input type="text" name="medicine_quantity"
+        <div class="form-field d-flex align-items-center"> <input type="number" name="medicine_quantity"
                 placeholder="Medicine Quantity">
         </div>
         <input type="text" class="purpose" name="purpose" placeholder="purpose">
 
+        <div class="abc">
+            Upload prescription
+        </div>
         <div class="file">
-            <input type="file" name="imag" id="" placeholder="upload file">
+            <input type="file" name="imag" id="" placeholder="upload file" required>
         </div>
 
         <input class="btn" type="submit" value="Submit">
