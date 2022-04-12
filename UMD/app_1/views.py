@@ -289,6 +289,9 @@ def approverequest(request):
             MedicineStockModel.objects.filter(medicine_name=medicine_name).update(medicine_quantity=curr-req)
         else:
             RequestModel.objects.filter(request_id=request_id).update(status="Not enough Medicine")
+    else :
+            RequestModel.objects.filter(request_id=request_id).update(status="No Medicine")
+
 
     return HttpResponseRedirect("requests")
 
