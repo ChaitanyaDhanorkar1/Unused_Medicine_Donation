@@ -2,7 +2,7 @@ from datetime import date,timedelta
 from distutils.command.upload import upload
 from email.policy import default
 from django.shortcuts import render,HttpResponse
-from flask import current_app
+# from flask import current_app
 from requests import session
 from sqlalchemy import false
 from .forms import FeedbackForm
