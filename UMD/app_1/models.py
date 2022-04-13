@@ -51,6 +51,7 @@ class FeedbackModel(models.Model):
     
     user_id = models.CharField(max_length=20, default=0,primary_key=True)
     feedback = models.TextField()
+    rating=models.IntegerField(max_length=1)
     
     def __str__(self):
         return self.user_id
