@@ -1,14 +1,16 @@
-from datetime import datetime
+from datetime import date,timedelta
 from distutils.command.upload import upload
 from email.policy import default
 from django.shortcuts import render,HttpResponse
+from flask import current_app
 from requests import session
 from sqlalchemy import false
 from .forms import FeedbackForm
 from django.http import HttpResponse,HttpResponseRedirect
-from app_1.models import Activemembers, Entry,DonationModel,MedicineStockModel, RequestModel
+from app_1.models import Activemembers, Entry,DonationModel, FeedbackModel,MedicineStockModel, RequestModel
 import random
 from twilio.rest import Client
+from django.db.models import Avg, Count, Min, Sum
 
 usersessions = {'login' : False,'userid' : ""}
 adminsessions={'login' : False,'acid' : ""}
@@ -56,15 +58,12 @@ def feedback_function(request) :
     if usersessions['login']==False :
         msg="Please Login"
         return render(request,'login.html',{'msg' : msg})
-    context ={}
-    # create object of form
-    form = FeedbackForm(request.POST or None, request.FILES or None)      
-    # check if form data is valid
-    if form.is_valid():
-        # save the form data to model
-        form.save()  
-    context['form']= form
-    return render(request, "user_feedback.html", context)
+   
+    if request.method=='POST':
+        feedback=request.POST['feedb']
+        FeedbackModel(user_id=usersessions['userid'],feedback=feedback).save()
+        return HttpResponseRedirect("profile")
+    return render(request,"user_feedback.html")
 
 def register(request):
     return render(request,"register.html")
@@ -224,16 +223,11 @@ def approvedonate(request) :
         msg="Please Login"
         return render(request,'login.html',{'msg' : msg})
     donate_id=request.GET['donate_id']
-    DonationModel.objects.filter(donate_id=donate_id).update(status="Approve")
+    # DonationModel.objects.filter(donate_id=donate_id).update(status="Approve")
     medicine_name=DonationModel.objects.filter(donate_id=donate_id).first().medicine_name
-
-    if MedicineStockModel.objects.filter(medicine_name=medicine_name).first() is not None :
-        add=DonationModel.objects.filter(donate_id=donate_id).first().medicine_quantity
-        curr=MedicineStockModel.objects.filter(medicine_name=medicine_name).first().medicine_quantity
-        MedicineStockModel.objects.filter(medicine_name=medicine_name).update(medicine_quantity=curr+add)
-    else :
-        add=DonationModel.objects.filter(donate_id=donate_id).first().medicine_quantity
-        MedicineStockModel(medicine_name=medicine_name,medicine_quantity=add).save()  
+    add=DonationModel.objects.filter(donate_id=donate_id).first().medicine_quantity
+    expiry_date=DonationModel.objects.filter(donate_id=donate_id).first().expiry_date
+    MedicineStockModel(medicine_name=medicine_name,medicine_quantity=add,expiry_date=expiry_date).save()  
     return HttpResponseRedirect("donations")
 
 def rejectdonate(request) :
@@ -280,18 +274,30 @@ def approverequest(request):
         return render(request,'AdminLogin.html',{'msg' : "please login"})
     request_id=request.GET['request_id']
     medicine_name=RequestModel.objects.filter(request_id=request_id).first().medicine_name
+    req_quantity=RequestModel.objects.filter(request_id=request_id,medicine_name=medicine_name).first().medicine_quantity
 
-    if MedicineStockModel.objects.filter(medicine_name=medicine_name).first() is not None :
-        req=RequestModel.objects.filter(request_id=request_id).first().medicine_quantity
-        curr=MedicineStockModel.objects.filter(medicine_name=medicine_name).first().medicine_quantity
-        if req<curr :
-            RequestModel.objects.filter(request_id=request_id).update(status="Approve")
-            MedicineStockModel.objects.filter(medicine_name=medicine_name).update(medicine_quantity=curr-req)
-        else:
-            RequestModel.objects.filter(request_id=request_id).update(status="Not enough Medicine")
-    else :
+    cur=0
+    for rows in MedicineStockModel.objects.filter(status="Usable",medicine_name=medicine_name):
+        cur+=rows.medicine_quantity
+
+    if cur<req_quantity:
+        if cur!=0:
+            RequestModel.objects.filter(request_id=request_id).update(medicine_quantity=cur)
+            RequestModel.objects.filter(request_id=request_id).update(status="Partially Supplied")
+        else :
             RequestModel.objects.filter(request_id=request_id).update(status="No Medicine")
 
+    else :
+        RequestModel.objects.filter(request_id=request_id).update(status="Approve Medicine")
+        for rows in MedicineStockModel.objects.filter(status="Usable",medicine_name=medicine_name).order_by('expiry_date'):
+            if rows.medicine_quantity<req_quantity:
+                rows.delete()
+                req_quantity-=rows.medicine_quantity
+            else :
+                upd=rows.medicine_quantity-req_quantity
+                rows.medicine_quantity=upd
+                rows.save(update_fields=['medicine_quantity'])
+                break
 
     return HttpResponseRedirect("requests")
 
@@ -335,3 +341,8 @@ def adminprofile(request):
         return render(request,'AdminProfile.html' ,{'user':user})
     else:
         return render(request,'adminlogin.html')
+
+def dispose(request):
+    expired_date=date.today()+timedelta(days=60)
+    MedicineStockModel.objects.filter(expiry_date__lte=expired_date).update(status="Expired")
+    return HttpResponseRedirect('adminprofile')

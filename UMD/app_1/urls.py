@@ -48,4 +48,5 @@ urlpatterns = [
     path('profile',views.profile),
     path('adminprofile',views.adminprofile),
     # path('test',views.test)
+    path('dispose',views.dispose)
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT )

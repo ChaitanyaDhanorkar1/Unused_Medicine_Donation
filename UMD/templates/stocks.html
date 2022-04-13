@@ -8,6 +8,7 @@
             <th>Medicine_Quantity</th>
             <th>Expiry_Date</th>
 
+<<<<<<< HEAD
         </thead>
         {% for d in data %}
         <tr>
@@ -19,3 +20,18 @@
     </table>
 </div>
 {% endblock %}
+=======
+                </thead>
+                {% for d in data %}
+                <tr>
+                    <td>{{d.status}}</td>
+                    <td>{{d.medicine_name}}</td>
+                    <td>{{d.medicine_quantity}}</td>
+                    <td>{{d.expiry_date}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </body>
+</html>
+>>>>>>> cccfac85d1601649cc6a8a685c4d3d1ddc4c9bf4
