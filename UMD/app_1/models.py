@@ -13,7 +13,7 @@ class DonationModel(models.Model):
     status=models.CharField(default="pending",max_length=20)
     user_id = models.CharField(max_length=20, default=0)
     medicine_name = models.CharField(max_length=100, default="Medicine")
-    medicine_quantity = models.IntegerField(default='0',max_length=300)
+    medicine_quantity = models.IntegerField(default='0')
     donation_date = models.DateField(default=date.today())
     expiry_date = models.DateField(default=date.today()) 
     pickup_address=models.TextField(default="Not found")
@@ -27,7 +27,7 @@ class RequestModel(models.Model):
     status=models.CharField(default="pending",max_length=20)
     user_id = models.CharField(max_length=20, default=0)
     medicine_name = models.CharField(max_length=100, default="Medicine")
-    medicine_quantity = models.IntegerField(max_length=50)
+    medicine_quantity = models.IntegerField(default=0)
     request_date = models.DateField(default=date.today())
     purpose=models.TextField(null=True,blank=True)
     image=models.FileField(null=True,blank=True,default="/static/13.jpg")
@@ -51,7 +51,7 @@ class FeedbackModel(models.Model):
     
     user_id = models.CharField(max_length=20, default=0,primary_key=True)
     feedback = models.TextField()
-    rating=models.IntegerField(max_length=1)
+    rating=models.IntegerField(default=5)
     
     def __str__(self):
         return self.user_id
@@ -66,7 +66,7 @@ class Entry(models.Model):
     phone=models.CharField(max_length=30)
     adhaar=models.CharField(max_length=12,primary_key=True)
     pass1=models.CharField(max_length=30)
-    image=models.FileField(null=True,blank=True)
+    image=models.FileField(null=True,blank=True,default='profile.png')
 
     def __str__(self):
         return  self.name
@@ -79,7 +79,7 @@ class Activemembers(models.Model):
     phone=models.CharField(max_length=30)
     adhaar=models.CharField(max_length=12,primary_key=True)
     pass1=models.CharField(max_length=30)
-    image=models.FileField(null=True,blank=True)
+    image=models.FileField(null=True,blank=True,default='profile.png')
 
     def __str__(self):
         return  self.name   

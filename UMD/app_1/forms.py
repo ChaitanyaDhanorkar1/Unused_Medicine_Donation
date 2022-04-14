@@ -5,3 +5,5 @@ class FeedbackForm(forms.ModelForm):
     class Meta:
         model = FeedbackModel
         fields = "__all__"  
+class FileForm(forms.Form):
+    file=forms.FileField(label='')

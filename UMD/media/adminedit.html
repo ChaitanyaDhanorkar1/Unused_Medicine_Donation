@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="./static/login.css">
 <div class="wrapper">
     <h2>Enter Details</h2>
-    <form action="/adminedit" method="POST" enctype="">
+    <form action="/adminedit" method="POST" enctype="multipart/form-data">
         {%csrf_token%}
         <div class="form-field d-flex align-items-center"> <input type="text" name="name" placeholder="Enter Name"
                 value="{{user.name}}">
@@ -25,10 +25,10 @@
 
         <div class="form-field d-flex align-items-center" > <input type="password" name="pass2"
                 placeholder="Conferm Password" value="{{user.pass1}}"> </div>
-
-        <!-- <div class="file">
+        <!-- {{fileForm}} -->
+        <div class="file">
             <input type="file" name="imag" id="" placeholder="upload file" value="{{user.image.url}}" >
-        </div> -->
+        </div>
 
         <input class="btn mt-3" type="submit" value="Update">
     </form>

@@ -12,8 +12,11 @@ import random
 from twilio.rest import Client
 from django.db.models import Avg, Count, Min, Sum
 
+from app_1.forms import FileForm
+
 usersessions = {'login' : False,'userid' : ""}
 adminsessions={'login' : False,'acid' : ""}
+
 
 def home_function(request):
     return render(request,'home.html')
@@ -59,11 +62,13 @@ def feedback_function(request) :
         msg="Please Login"
         return render(request,'login.html',{'msg' : msg})
    
+    user=Entry.objects.filter(user_id=usersessions['userid']).first()
     if request.method=='POST':
         feedback=request.POST['feedb']
-        FeedbackModel(user_id=usersessions['userid'],feedback=feedback).save()
-        return HttpResponseRedirect("profile")
-    return render(request,"user_feedback.html")
+        rating=request.POST['rating']
+        FeedbackModel(user_id=usersessions['userid'],feedback=feedback,rating=rating).save()
+        return render(request,"profile.html",{'feedback' : "Thanks for your feedback",'user' : user})
+    return render(request,"user_feedback.html",{'user' : user})
 
 def register(request):
     return render(request,"register.html")
@@ -154,20 +159,20 @@ def adminedit(request):
             address=request.POST['address']
             email=request.POST['email']
             phone=request.POST['phone']
-            # adhaar=request.POST['adhaar']
-            x=request.POST['imag']
             pass1=request.POST['pass1']
             pass2=request.POST['pass2']
             if pass1 != pass2:
                 return render(request,"adminedit.html",{'msg':"please enter the passoword"})
-            if x:
-                img=request.FILES['imag']
-                Activemembers.objects.filter(acid = adminsessions['acid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1,image=img)
-            else:
-                Activemembers.objects.filter(acid = adminsessions['acid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1)
+            # x=request.POST['imag']
+            # if x:
+            #     img=request.FILES['imag']
+            #     Activemembers.objects.filter(acid = adminsessions['acid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1,image=img)
+            # else:
+            # Activemembers.objects.filter(acid = adminsessions['acid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1)
+            Activemembers.objects.filter(acid = adminsessions['acid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1)
             return render(request,"adminedit.html",{'msg':"details edited successfully"})
         else:
-             return render(request,"adminedit.html",{'user':user})
+             return render(request,"adminedit.html",{'user':user,'formfile':FileForm})
     else:
         return render(request, 'Adminlogin.html')
 
@@ -179,17 +184,17 @@ def RecordEdited(request):
             address=request.POST['address']
             email=request.POST['email']
             phone=request.POST['phone']
-            # adhaar=request.POST['adhaar']
-            x=request.POST['imag']
             pass1=request.POST['pass1']
             pass2=request.POST['pass2']
             if pass1 != pass2:
                 return render(request,"edit.html",{'msg':"please enter the passoword"})
-            if x:
-                img=request.FILES['imag']
-                Entry.objects.filter(user_id = usersessions['userid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1,image=img)
-            else:
-                Entry.objects.filter(user_id = usersessions['userid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1)
+            # x=request.POST['imag']
+            # if x:
+            #     img=request.FILES['imag']
+            #     Entry.objects.filter(user_id = usersessions['userid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1,image=img)
+            # else:
+            #     Entry.objects.filter(user_id = usersessions['userid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1)
+            Entry.objects.filter(user_id = usersessions['userid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1)
             return render(request,"edit.html",{'msg':"details edited successfully"})
         else:
              return render(request,"edit.html",{'user':user})
@@ -223,7 +228,7 @@ def approvedonate(request) :
         msg="Please Login"
         return render(request,'login.html',{'msg' : msg})
     donate_id=request.GET['donate_id']
-    # DonationModel.objects.filter(donate_id=donate_id).update(status="Approve")
+    DonationModel.objects.filter(donate_id=donate_id).update(status="Approve")
     medicine_name=DonationModel.objects.filter(donate_id=donate_id).first().medicine_name
     add=DonationModel.objects.filter(donate_id=donate_id).first().medicine_quantity
     expiry_date=DonationModel.objects.filter(donate_id=donate_id).first().expiry_date
@@ -282,10 +287,11 @@ def approverequest(request):
 
     if cur<req_quantity:
         if cur!=0:
-            RequestModel.objects.filter(request_id=request_id).update(medicine_quantity=cur)
-            RequestModel.objects.filter(request_id=request_id).update(status="Partially Supplied")
+            MedicineStockModel.objects.filter(status="Usable",medicine_name=medicine_name).delete()
+            status=str(cur) + " Passed and " + str(req_quantity-cur)+" Out of Stock"
+            RequestModel.objects.filter(request_id=request_id).update(status=status)
         else :
-            RequestModel.objects.filter(request_id=request_id).update(status="No Medicine")
+            RequestModel.objects.filter(request_id=request_id).update(status="No Medicine Available")
 
     else :
         RequestModel.objects.filter(request_id=request_id).update(status="Approve Medicine")

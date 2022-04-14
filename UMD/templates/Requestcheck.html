@@ -20,9 +20,8 @@
         <th>User_ID</th>
         <th>Medicine_Name</th>
         <th>Medicine_Quantity</th>
-        <th>Expiry_Date</th>
-        <th>Donated_Date</th>
         <th>Decision</th>
+        <th>Medical Evidence</th>
     </thead>
     {% for d in data %}
     <tr>
@@ -30,13 +29,14 @@
         <td>{{d.user_id}}</td>
         <td>{{d.medicine_name}}</td>
         <td>{{d.medicine_quantity}}</td>
-        <td>{{d.expiry_date}}</td>
-        <td>{{d.donation_date}}</td>
         <td>
             <div class="discision">
                 <a href="/approverequest?request_id={{d.request_id}}">Supply Medicines</a>
                 <a href="/rejectrequest?request_id={{d.request_id}}">Reject Proposal</a>
             </div>
+        </td>
+        <td>
+            <a href={{d.image.url}}>{{d.user_id}}'s Prescription</a>
         </td>
     </tr>
     {% endfor %}
