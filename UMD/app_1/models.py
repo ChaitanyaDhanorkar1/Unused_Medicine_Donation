@@ -30,7 +30,7 @@ class RequestModel(models.Model):
     medicine_quantity = models.IntegerField(default=0)
     request_date = models.DateField(default=date.today())
     purpose=models.TextField(null=True,blank=True)
-    image=models.FileField(null=True,blank=True,default="/static/13.jpg")
+    image=models.FileField(null=True,blank=True,upload_to='prescription')
 
     def __str__(self):
         return self.user_id
@@ -66,7 +66,7 @@ class Entry(models.Model):
     phone=models.CharField(max_length=30)
     adhaar=models.CharField(max_length=12,primary_key=True)
     pass1=models.CharField(max_length=30)
-    image=models.FileField(null=True,blank=True,default='profile.png')
+    image=models.FileField(null=True,blank=True,default='profile/profile.png',upload_to='profile')
 
     def __str__(self):
         return  self.name
@@ -79,7 +79,7 @@ class Activemembers(models.Model):
     phone=models.CharField(max_length=30)
     adhaar=models.CharField(max_length=12,primary_key=True)
     pass1=models.CharField(max_length=30)
-    image=models.FileField(null=True,blank=True,default='profile.png')
+    image=models.FileField(null=True,blank=True,default='profile/profile.png',upload_to='profile')
 
     def __str__(self):
         return  self.name   

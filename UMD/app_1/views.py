@@ -161,18 +161,21 @@ def adminedit(request):
             phone=request.POST['phone']
             pass1=request.POST['pass1']
             pass2=request.POST['pass2']
+            img=request.FILES['imag']
             if pass1 != pass2:
                 return render(request,"adminedit.html",{'msg':"please enter the passoword"})
-            # x=request.POST['imag']
             # if x:
-            #     img=request.FILES['imag']
+            # img=request.FILES['imag']
             #     Activemembers.objects.filter(acid = adminsessions['acid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1,image=img)
             # else:
             # Activemembers.objects.filter(acid = adminsessions['acid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1)
             Activemembers.objects.filter(acid = adminsessions['acid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1)
-            return render(request,"adminedit.html",{'msg':"details edited successfully"})
+            
+            user.image=img
+            user.save(update_fields=['image'])
+            return render(request,"adminedit.html",{'msg':"details edited successfully",'user' : user})
         else:
-             return render(request,"adminedit.html",{'user':user,'formfile':FileForm})
+             return render(request,"adminedit.html",{'user':user})
     else:
         return render(request, 'Adminlogin.html')
 
@@ -186,16 +189,20 @@ def RecordEdited(request):
             phone=request.POST['phone']
             pass1=request.POST['pass1']
             pass2=request.POST['pass2']
+            img=request.FILES['imag']
             if pass1 != pass2:
                 return render(request,"edit.html",{'msg':"please enter the passoword"})
             # x=request.POST['imag']
             # if x:
-            #     img=request.FILES['imag']
-            #     Entry.objects.filter(user_id = usersessions['userid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1,image=img)
             # else:
+            #     Entry.objects.filter(user_id = usersessions['userid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1,image=img)
             #     Entry.objects.filter(user_id = usersessions['userid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1)
             Entry.objects.filter(user_id = usersessions['userid']).update(name=name,address=address,email=email,phone=phone,pass1=pass1)
-            return render(request,"edit.html",{'msg':"details edited successfully"})
+            if img is not None :
+                user.image=img
+                user.save(update_fields=['image'])
+            
+            return render(request,"profile.html",{'msg':"details edited successfully",'user' : user})
         else:
              return render(request,"edit.html",{'user':user})
     else:
