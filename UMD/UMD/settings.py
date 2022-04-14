@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import os
-
+import django_heroku
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR =os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES_DIR=os.path.join(BASE_DIR,'templates')
@@ -24,7 +24,7 @@ STATIC_DIR=os.path.join(BASE_DIR,'static')
 SECRET_KEY = 'django-insecure-1uw@ex%ji&u9xy8^0i=0ic0z10%p**c5sw1h)w!49k8k&5*j7p'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -141,6 +141,8 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR,'static'),
 )
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-
+# Activate Django-Heroku.
+django_heroku.settings(locals())
 
