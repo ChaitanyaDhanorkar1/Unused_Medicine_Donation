@@ -1,0 +1,34 @@
+body{
+    background: #ecf0f3;
+    background: url(/static/i4.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+#DivOne
+{
+    background-color: blanchedalmond;
+    max-width:fit-content;
+    padding:2%;
+    margin-left:40%;
+    margin-top:8%;
+    border-radius: 8px;
+    box-shadow: 5px 10px 8px #888888;
+}
+#DivOne input[type = "number"]{
+    padding: 5%;
+    width: 90%;
+}
+.btn{
+    background-color: #1e264b;
+    color: blanchedalmond;
+    padding:10px 15px;
+    border: none;
+}
+
+.btn:hover{
+	background-color: rgb(113, 143, 184);
+}
+#DivTwo
+{
+    margin-left:90%;
+}

@@ -19,7 +19,7 @@ adminsessions={'login' : False,'acid' : ""}
 
 
 def home_function(request):
-    return render(request,'home.html')
+    return render(request,'Home.html')
 
 def monetory_function(request):
     return render(request,'monetory_donation.html')   
@@ -325,12 +325,12 @@ def rejectrequest(request) :
 def userlogout(request) :
     usersessions['userid']=""
     usersessions['login']=False
-    return render(request,"home.html")
+    return render(request,"Home.html")
 
 def adminlogout(request):
     adminsessions['acid']=""
     adminsessions['login']=False
-    return render(request,"home.html")
+    return render(request,"Home.html")
 
 def stocks(request):
     if adminsessions['login']==False :

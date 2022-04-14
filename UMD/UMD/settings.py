@@ -24,10 +24,13 @@ STATIC_DIR=os.path.join(BASE_DIR,'static')
 SECRET_KEY = 'django-insecure-1uw@ex%ji&u9xy8^0i=0ic0z10%p**c5sw1h)w!49k8k&5*j7p'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = []
-
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://deploy-weather-application.herokuapp.com',
+            'localhost',
+            '127.0.0.1'
+]
 
 # Application definition
 

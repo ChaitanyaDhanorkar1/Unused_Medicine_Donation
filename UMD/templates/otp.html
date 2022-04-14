@@ -1,52 +1,18 @@
-<!DOCTYPE html>
-{% load static %}
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{% static 'home.css' %}">
-        <style>
-            body{
-                background-color: aquamarine;
-            }
-            #DivOne
-            {
-                background-color:black;
-                max-width:fit-content;
-                padding:1%;
-                margin-left:40%;
-                margin-top:8%;
-            }
-            #btn
-            {
-                margin-left:35%;
-            }
-            #DivTwo
-            {
-                margin-left:90%;
-            }
-        </style>
-    </head>
-    <body>
-        {{msg}}
-       <div id="DivTwo">
-           <form action="/show">
-               <input type="submit" value="show records">
-           </form>
-       </div>
-       <div id="DivOne">
-           <form action="/otpfunc" method="POST">
-               {%csrf_token%}
+{% extends 'base.html' %}
 
-               <h3>OTP<br><input placeholder="Enter otp from phone" required autofocus type="number" name="otp"></h3>
+{% block content %}
+{{msg}}
+<link rel="stylesheet" href="/static/otp.css">
+<div id="DivOne">
+    <form action="/otpfunc" method="POST">
+        {%csrf_token%}
 
-               <input type="submit" id="btn">
+        <h3>Enter OTP sent to registered no.<br><br>
+            <input placeholder="Enter otp" required autofocus type="number" name="otp">
+        </h3>
+        <br>
+        <input type="submit" class="btn">
+    </form>
 
-           </form>
-
-       </div>
-    </body>
-</html>
+</div>
+{% endblock %}
