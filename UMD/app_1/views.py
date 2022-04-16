@@ -17,6 +17,9 @@ from app_1.forms import FileForm
 usersessions = {'login' : False,'userid' : ""}
 adminsessions={'login' : False,'acid' : ""}
 
+def dispose1(request):
+    expired_date=date.today()+timedelta(days=60)
+    MedicineStockModel.objects.filter(expiry_date__lte=expired_date).update(status="Expired")
 
 def home_function(request):
     return render(request,'Home.html')
@@ -284,6 +287,7 @@ def requests(request):
 def approverequest(request):
     if adminsessions['login']==False :
         return render(request,'AdminLogin.html',{'msg' : "please login"})
+    dispose1(request)
     request_id=request.GET['request_id']
     medicine_name=RequestModel.objects.filter(request_id=request_id).first().medicine_name
     req_quantity=RequestModel.objects.filter(request_id=request_id,medicine_name=medicine_name).first().medicine_quantity
@@ -336,6 +340,7 @@ def stocks(request):
     if adminsessions['login']==False :
         msg="Please Login"
         return render(request,'AdminLogin.html',{'msg' : msg})
+    dispose(request)
     user=Activemembers.objects.filter(acid=adminsessions['acid']).first()
     data=MedicineStockModel.objects.filter().all()
     return render(request,"stocks.html",{'data':data,'user':user})    
