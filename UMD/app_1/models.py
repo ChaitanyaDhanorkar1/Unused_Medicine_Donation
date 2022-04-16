@@ -10,7 +10,7 @@ from django.forms import FileField
 
 class DonationModel(models.Model):
     donate_id=models.AutoField(primary_key=True)
-    status=models.CharField(default="pending",max_length=20)
+    status=models.CharField(default="pending",max_length=200)
     user_id = models.CharField(max_length=20, default=0)
     medicine_name = models.CharField(max_length=100, default="Medicine")
     medicine_quantity = models.IntegerField(default='0')
@@ -24,7 +24,7 @@ class DonationModel(models.Model):
 # Model for Medicine Request Page
 class RequestModel(models.Model):
     request_id=models.AutoField(primary_key=True)
-    status=models.CharField(default="pending",max_length=20)
+    status=models.CharField(default="pending",max_length=200)
     user_id = models.CharField(max_length=20, default=0)
     medicine_name = models.CharField(max_length=100, default="Medicine")
     medicine_quantity = models.IntegerField(default=0)
@@ -40,7 +40,7 @@ class MedicineStockModel(models.Model):
     
     medicine_name = models.CharField(max_length=100, default="Medicine")
     medicine_quantity = models.IntegerField(default=0)
-    status=models.CharField(default="Usable",max_length=20)
+    status=models.CharField(default="Usable",max_length=200)
     expiry_date = models.DateField(default=date.today())
     
     def __str__(self):

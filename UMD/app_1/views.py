@@ -30,7 +30,7 @@ def donation_function(request) :
         return render(request,'login.html',{'msg' : msg})
     user=Entry.objects.filter(user_id=usersessions['userid']).first()
     if request.method=="POST":
-        msg="thanks for initiation"
+        msg="Thanks for initiation"
         medicine_name=request.POST['medicine_name']
         medicine_quantity=request.POST['medicine_quantity']
         expiry_date=request.POST['expiry_date']
